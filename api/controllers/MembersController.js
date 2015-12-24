@@ -34,10 +34,12 @@ module.exports = {
 	updateMembers: function(req, res) {
 		var members = (req.body) ? req.body : undefined;
 		var counter = 0;
-//        console.log('------------------');
-//		console.log(members);
-//        console.log('------------------');
-//res.json(req.body);
+
+        //Single member
+        if (members.length === undefined) {
+            members = [members];
+        }
+
 		members.forEach(function(member) {
 			MembersService.updateMember({id: member.id}, {team: member.team, name: member.name, pos: member.pos}, function(success) {
 				counter++;

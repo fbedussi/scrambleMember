@@ -26,25 +26,21 @@
         <p>Team members:</p>
         <ol>
             <li ng-repeat="singleMember in members | orderBy:'pos'">
-                {{singleMember.name}}
+                <span ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</span>
+                <form ng-show="memberEdit" ng-submit="memberEdit = false">
+                    <input type="text" ng-model="singleMember.name">
+                    <button type="submit" ng-click="editMember(singleMember)">save</button>
+                </form>
                 <button ng-click="removeMember(singleMember)">del</button>
             </li>
         </ol>
-        <button ng-click="scrambleMembers()">Scramble Members</button>
-        <span ng-show="dataSaved" class="ng-hide-animate ng-show-animate">saved</span>
+        <div ng-show="members.length">
+            <button ng-click="scrambleMembers()">Scramble Members</button>
+            <span ng-show="dataSaved" class="ng-hide-animate ng-show-animate">saved</span>
+        </div>
         <form>
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
             <button type="submit" ng-click="addMember()">Add Member</button>
         </form>
     </div>
-    <!--<div id="todo-list" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            <div class="checkbox" ng-repeat="singleTodo in todos">
-                <label>
-                    <input type="checkbox" ng-click="todo.removeTodo(singleTodo)">
-                    {{ singleTodo.value }}
-                </label>
-            </div>
-        </div>
-    </div>-->
 </div>

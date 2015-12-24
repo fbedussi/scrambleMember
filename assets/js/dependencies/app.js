@@ -22,24 +22,34 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
   $scope.selectedTeam = {};
   $scope.dataSeved = false;
   
-  ScrambleService.getTeams().then(function(response) {
-    $scope.teams = response;
-    
+  function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {
         $scope.selectTeam($scope.teams[0]);
     }
+  }
+  
+  ScrambleService.getTeams().then(function(response) {
+    $scope.teams = response;
+    
+    selectIfIsTheOnlyTeam();
   });
 
   $scope.addTeam = function() {
     ScrambleService.addTeam($scope.formDataNewTeam).then(function(response) {
       $scope.teams.push(response);
       $scope.formDataNewTeam = {};
+      
+      selectIfIsTheOnlyTeam();
     });
   };
 
   $scope.removeTeam = function(team) {
     ScrambleService.removeTeam(team).then(function(response) {
       $scope.teams.splice($scope.teams.indexOf(team), 1);
+      
+      if ($scope.selectedTeam === team) {
+        $scope.selectedTeam = {};
+      }
     });
   };
   
@@ -97,6 +107,12 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
     }, function(response) {
         $scope.dataSaved = false;
         //console.log('not saved');
+    });
+  };
+  
+  $scope.editMember = function(member) {
+    ScrambleService.updateMembers(member).then(function(response) {
+       console.log('member saved');
     });
   };
 
