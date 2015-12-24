@@ -1,0 +1,47 @@
+<div class="container" ng-controller="ScrambleCtrl as scramble">
+    <div>
+        <h1 align="center">Teams</h1>
+        <br>
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <fieldset>
+                    <div ng-repeat="singleTeam in teams">
+                        <input type="radio" name="team" ng-click="selectTeam(singleTeam)">
+                        <!--<input type="text" class="form-control input-lg text-center" placeholder="Enter new team name" value="{{singleTeam.name}}" ng-model="formDataTeam.name">-->
+                        {{singleTeam.name}}
+                        <button ng-click="removeTeam(singleTeam)">del</button>
+                        
+                    </div>
+                </fieldset>
+                <form>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Enter new team name" ng-model="formDataTeam.name">
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="addTeam()">Add Team</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p>Selected team: {{selectedTeam.name}}</p>
+        <p>Team members:</p>
+        <ul>
+            <li ng-repeat="singleMember in members">
+                {{singleMember.name}}
+            </li>
+        </ul>
+        
+        <form>
+            <input type="text" class="form-control input-lg text-center" placeholder="Enter new team member name" ng-model="formDataMember.name">
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="addMember()">Add Member</button>
+        </form>
+    </div>
+    <!--<div id="todo-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="checkbox" ng-repeat="singleTodo in todos">
+                <label>
+                    <input type="checkbox" ng-click="todo.removeTodo(singleTodo)">
+                    {{ singleTodo.value }}
+                </label>
+            </div>
+        </div>
+    </div>-->
+</div>
