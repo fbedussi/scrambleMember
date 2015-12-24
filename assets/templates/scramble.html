@@ -6,9 +6,9 @@
             <fieldset>
                 <div ng-repeat="singleTeam in teams">
                     <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
-                    <span ng-hide="teamEdit" ng-click="teamEdit = true; formDataEditTeam.name = singleTeam.name">{{singleTeam.name}}</span>
+                    <span ng-hide="teamEdit" ng-click="teamEdit = true">{{singleTeam.name}}</span>
                     <form ng-show="teamEdit" ng-submit="teamEdit = false">
-                        <input type="text" ng-model="formDataEditTeam.name">
+                        <input type="text" ng-model="singleTeam.name">
                         <button type="submit" ng-click="editTeam(singleTeam)">save</button>
                     </form>
                     <button ng-click="removeTeam(singleTeam)">del</button>

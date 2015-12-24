@@ -21,9 +21,9 @@
         "name": "aaa",
         "team": 90,
         "createdAt": "2015-12-24T09:09:04.104Z",
-        "updatedAt": "2015-12-24T14:34:19.106Z",
+        "updatedAt": "2015-12-24T14:39:59.305Z",
         "id": 114,
-        "pos": 1
+        "pos": 3
       },
       {
         "name": "ddd",
@@ -36,26 +36,26 @@
         "name": "sdds",
         "team": 90,
         "createdAt": "2015-12-24T10:28:57.813Z",
-        "updatedAt": "2015-12-24T14:34:19.107Z",
+        "updatedAt": "2015-12-24T14:39:59.306Z",
         "id": 117,
-        "pos": 3
+        "pos": 2
       },
       {
         "name": "dasdas",
         "team": 90,
         "createdAt": "2015-12-24T10:53:15.957Z",
-        "updatedAt": "2015-12-24T14:34:19.108Z",
+        "updatedAt": "2015-12-24T14:39:59.308Z",
         "id": 118,
-        "pos": 2
+        "pos": 1
       }
     ],
     "posts": [],
     "todo": [],
     "team": [
       {
-        "name": "testTeam 3",
+        "name": "testTeam 6",
         "createdAt": "2015-12-23T17:59:41.545Z",
-        "updatedAt": "2015-12-24T14:34:19.105Z",
+        "updatedAt": "2015-12-24T14:37:41.308Z",
         "id": 90
       },
       {

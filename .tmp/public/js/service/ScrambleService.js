@@ -62,6 +62,15 @@ scrambleApp.service('ScrambleService', function($http, $q) {
             defer.reject(err);
           });
           return defer.promise;
+        },
+        'updateMembers': function(members) {
+          var defer = $q.defer();
+          $http.put('/api/v1/members/', members).success(function(resp){
+            defer.resolve(resp);
+          }).error( function(err) {
+            defer.reject(err);
+          });
+          return defer.promise;
         }
     };
 });
