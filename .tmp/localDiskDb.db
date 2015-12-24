@@ -1,0 +1,158 @@
+{
+  "data": {
+    "members": [
+      {
+        "name": "testMember1",
+        "team": 91,
+        "pos": 4,
+        "createdAt": "2015-12-23T17:59:41.640Z",
+        "updatedAt": "2015-12-23T17:59:41.663Z",
+        "id": 112
+      },
+      {
+        "name": "testMember2",
+        "team": 91,
+        "pos": 3,
+        "createdAt": "2015-12-23T17:59:41.647Z",
+        "updatedAt": "2015-12-23T17:59:41.664Z",
+        "id": 113
+      }
+    ],
+    "posts": [],
+    "todo": [],
+    "team": [
+      {
+        "name": "testTeam2",
+        "createdAt": "2015-12-23T17:59:41.545Z",
+        "updatedAt": "2015-12-23T17:59:41.545Z",
+        "id": 90
+      },
+      {
+        "name": "vcxvxc",
+        "createdAt": "2015-12-23T22:22:29.808Z",
+        "updatedAt": "2015-12-23T22:22:29.808Z",
+        "id": 99
+      },
+      {
+        "name": "fsdfs",
+        "createdAt": "2015-12-24T08:29:50.933Z",
+        "updatedAt": "2015-12-24T08:29:50.933Z",
+        "id": 102
+      }
+    ],
+    "member": []
+  },
+  "schema": {
+    "members": {
+      "name": {
+        "type": "text"
+      },
+      "team": {
+        "type": "integer",
+        "model": "team",
+        "foreignKey": true,
+        "alias": "team"
+      },
+      "pos": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "posts": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "todo": {
+      "value": {
+        "type": "text"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "team": {
+      "name": {
+        "type": "text"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "member": {
+      "name": {
+        "type": "text"
+      },
+      "team": {
+        "type": "integer",
+        "model": "team",
+        "foreignKey": true,
+        "alias": "team"
+      },
+      "pos": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "members": {
+      "id": 113
+    },
+    "posts": {},
+    "todo": {},
+    "team": {
+      "id": 102
+    },
+    "member": {}
+  }
+}
