@@ -43,7 +43,8 @@ module.exports = {
 				counter++;
 				
 				if (counter === members.length) {
-                    res.json(success);
+                    res.status(200);
+                    res.send();
                 }
 				
 			});

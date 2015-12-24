@@ -1,37 +1,40 @@
-<div class="container" ng-controller="ScrambleCtrl as scramble">
+<div ng-controller="ScrambleCtrl as scramble">
     <div>
-        <h1 align="center">Teams</h1>
-        <br>
-        <div id="todo-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <fieldset>
-                    <div ng-repeat="singleTeam in teams">
-                        <input type="radio" name="team" ng-click="selectTeam(singleTeam)">
-                        <!--<input type="text" class="form-control input-lg text-center" placeholder="Enter new team name" value="{{singleTeam.name}}" ng-model="formDataTeam.name">-->
-                        {{singleTeam.name}}
-                        <button ng-click="removeTeam(singleTeam)">del</button>
-                        
-                    </div>
-                </fieldset>
-                <form>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Enter new team name" ng-model="formDataTeam.name">
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="addTeam()">Add Team</button>
-                </form>
-            </div>
+        <h1>Team members position scramble</h1>
+        <h2>Teams</h2>
+        <div>
+            <fieldset>
+                <div ng-repeat="singleTeam in teams">
+                    <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
+                    <span ng-hide="teamEdit" ng-click="teamEdit = true; formDataEditTeam.name = singleTeam.name">{{singleTeam.name}}</span>
+                    <form ng-show="teamEdit" ng-submit="teamEdit = false">
+                        <input type="text" ng-model="formDataEditTeam.name">
+                        <button type="submit" ng-click="editTeam(singleTeam)">save</button>
+                    </form>
+                    <button ng-click="removeTeam(singleTeam)">del</button>
+                </div>
+            </fieldset>
+            <form>
+                <input type="text" placeholder="Enter new team name" ng-model="formDataNewTeam.name">
+                <button type="submit" ng-click="addTeam()">Add Team</button>
+            </form>
         </div>
     </div>
-    <div>
+    <div ng-show="selectedTeam.name">
+        <h2>Members</h2>
         <p>Selected team: {{selectedTeam.name}}</p>
         <p>Team members:</p>
-        <ul>
-            <li ng-repeat="singleMember in members">
+        <ol>
+            <li ng-repeat="singleMember in members | orderBy:'pos'">
                 {{singleMember.name}}
+                <button ng-click="removeMember(singleMember)">del</button>
             </li>
-        </ul>
-        
+        </ol>
+        <button ng-click="scrambleMembers()">Scramble Members</button>
+        <span ng-show="dataSaved" class="ng-hide-animate ng-show-animate">saved</span>
         <form>
-            <input type="text" class="form-control input-lg text-center" placeholder="Enter new team member name" ng-model="formDataMember.name">
-            <button type="submit" class="btn btn-primary btn-lg" ng-click="addMember()">Add Member</button>
+            <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
+            <button type="submit" ng-click="addMember()">Add Member</button>
         </form>
     </div>
     <!--<div id="todo-list" class="row">

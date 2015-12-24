@@ -44,6 +44,24 @@ scrambleApp.service('ScrambleService', function($http, $q) {
             defer.reject(err);
           });
           return defer.promise;
+        },
+        'addMember': function(member) {
+          var defer = $q.defer();
+          $http.post('/api/v1/members', member).success(function(resp){
+            defer.resolve(resp);
+          }).error( function(err) {
+            defer.reject(err);
+          });
+          return defer.promise;
+        },
+        'removeMember': function(member) {
+          var defer = $q.defer();
+          $http.delete('/api/v1/members/' + member.id).success(function(resp){
+            defer.resolve(resp);
+          }).error( function(err) {
+            defer.reject(err);
+          });
+          return defer.promise;
         }
     };
 });
