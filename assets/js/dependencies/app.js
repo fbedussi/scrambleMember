@@ -60,10 +60,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
     });
   };
   
-  $scope.editTeam = function(team) {
-    //team.name = $scope.formDataEditTeam.name;
-    //$scope.formDataEditTeam.name = {};
-    
+  $scope.editTeam = function(team) {  
     ScrambleService.editTeam(team).then(function(response) {
       var index = $scope.teams.indexOf(team);
       $scope.teams[index] = team;
