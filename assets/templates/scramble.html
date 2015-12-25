@@ -1,9 +1,9 @@
 <div ng-controller="ScrambleCtrl as scramble">
     <div>
         <h1>Team members position scramble</h1>
-        <h2>Teams</h2>
         <div>
             <fieldset>
+                <legend>Teams</legend>
                 <div ng-repeat="singleTeam in teams">
                     <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
                     <span ng-hide="teamEdit" ng-click="teamEdit = true">{{singleTeam.name}}</span>
@@ -21,26 +21,32 @@
         </div>
     </div>
     <div ng-show="selectedTeam.name">
-        <h2>Members</h2>
-        <p>Selected team: {{selectedTeam.name}}</p>
-        <p>Team members:</p>
-        <ol>
-            <li ng-repeat="singleMember in members | orderBy:'pos'">
-                <span ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</span>
-                <form ng-show="memberEdit" ng-submit="memberEdit = false">
-                    <input type="text" ng-model="singleMember.name">
-                    <button type="submit" ng-click="editMember(singleMember)">save</button>
-                </form>
-                <button ng-click="removeMember(singleMember)">del</button>
-            </li>
-        </ol>
+        
+        <fieldset>
+            <legend>Members</legend>
+            <p>Selected team: {{selectedTeam.name}}</p>
+            <p>Team members:</p>
+            <ol>
+                <li ng-repeat="singleMember in members | orderBy:'pos'">
+                    <span ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</span>
+                    <form ng-show="memberEdit" ng-submit="memberEdit = false">
+                        <input type="text" ng-model="singleMember.name">
+                        <button type="submit" ng-click="editMember(singleMember)">save</button>
+                    </form>
+                    <button ng-click="removeMember(singleMember)">del</button>
+                </li>
+            </ol>
+        </fieldset>
         <div ng-show="members.length">
             <button ng-click="scrambleMembers()">Scramble Members</button>
-            <span ng-show="dataSaved" class="ng-hide-animate ng-show-animate">saved</span>
+            <span ng-show="dataSaved">saved</span>
         </div>
-        <form>
+        
+        <form method="post">
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
-            <button type="submit" ng-click="addMember()">Add Member</button>
+            <input type="file" name="avatar" ngf-select="" ng-model="avatar" >
+            <button ng-click="uploadAvatar(avatar)">Add Member</button>
         </form>
+    
     </div>
 </div>

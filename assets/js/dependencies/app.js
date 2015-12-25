@@ -1,6 +1,6 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload']);
 
 scrambleApp.config(['$routeProvider',
   function($routeProvider) {
@@ -13,7 +13,7 @@ scrambleApp.config(['$routeProvider',
     });
   }]);
 
-scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'ScrambleService', function($scope, $rootScope, $timeout, ScrambleService) {
+scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService', function($scope, Upload, $rootScope, $timeout, ScrambleService) {
   $scope.formDataNewTeam = {};
   $scope.formDataEditTeam = {};
   $scope.formDataMember = {};
@@ -21,6 +21,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
   $scope.members = [];
   $scope.selectedTeam = {};
   $scope.dataSeved = false;
+  $scope.avatarUrl = '';
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {
@@ -43,15 +44,15 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
     });
   };
 
-  $scope.removeTeam = function(team) {
-    ScrambleService.removeTeam(team).then(function(response) {
-      $scope.teams.splice($scope.teams.indexOf(team), 1);
-      
-      if ($scope.selectedTeam === team) {
-        $scope.selectedTeam = {};
-      }
-    });
-  };
+    $scope.removeTeam = function(team) {
+      ScrambleService.removeTeam(team).then(function(response) {
+        $scope.teams.splice($scope.teams.indexOf(team), 1);
+        
+        if ($scope.selectedTeam === team) {
+          $scope.selectedTeam = {};
+        }
+      });
+    };
   
   $scope.selectTeam = function(team) {
     $scope.selectedTeam = team;
@@ -60,24 +61,52 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', '$rootScope', '$timeout', 'Scr
     });
   };
   
-  $scope.editTeam = function(team) {  
-    ScrambleService.editTeam(team).then(function(response) {
-      var index = $scope.teams.indexOf(team);
-      $scope.teams[index] = team;
-    });
-  };
+    $scope.editTeam = function(team) {  
+        ScrambleService.editTeam(team).then(function(response) {
+            var index = $scope.teams.indexOf(team);
+            $scope.teams[index] = team;
+        });
+    };
   
-  $scope.addMember = function() {
-    var newMember = {};
+    $scope.uploadAvatar = function(file) {
+        console.log(file);
+        if (!file) {
+            console.log('no file');
+            $scope.addMember();
+        } else {
+            console.log('uploading file');
+            var upload = Upload.upload({
+                url: '/api/v1/members/avatar/',
+                data: {file: file}
+            });
+            
+            // returns a promise
+            upload.then(function(resp) {
+                //Uploaded successfully
+                $scope.avatarUrl = resp.data.fileName;
+                $scope.addMember();    
+            }, function(resp) {
+                // handle error
+                $scope.addMember();
+            }, function(evt) {
+                // progress notify
+                //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
+            });   
+        }
+    };
     
-    newMember.name = $scope.formDataMember.name;
-    newMember.team = $scope.selectedTeam.id;
-    
-    ScrambleService.addMember(newMember).then(function(response) {
-      $scope.members.push(response);
-      $scope.formDataMember = {};
-    });
-  };
+    $scope.addMember = function() {
+        var newMember = {};
+        
+        newMember.name = $scope.formDataMember.name;
+        newMember.team = $scope.selectedTeam.id;
+        newMember.avatarUrl = $scope.avatarUrl;
+        
+        ScrambleService.addMember(newMember).then(function(response) {
+          $scope.members.push(response);
+          $scope.formDataMember = {};
+        });    
+    };
   
    $scope.removeMember = function(member) {
     ScrambleService.removeMember(member).then(function(response) {

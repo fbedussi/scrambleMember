@@ -16,6 +16,7 @@ module.exports = {
         team: {
             model: 'team'
         },
+        avatarUrl: 'text',
         pos: {
             type: 'integer'
         }

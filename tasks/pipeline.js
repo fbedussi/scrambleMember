@@ -16,7 +16,7 @@ var tmpPath = '.tmp/public/';
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'bower_components/bootstrap/dist/css/bootstrap.css',
+  //'bower_components/bootstrap/dist/css/bootstrap.css',
   'styles/**/*.css'
 ];
 
@@ -28,12 +28,14 @@ var jsFilesToInject = [
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
-  '/bower_components/jquery/dist/jquery.js',
-  '/bower_components/angular/angular.js',
-  '/bower_components/angular-route/angular-route.js',
-  '/bower_components/angular-animate/angular-animate.js',
-  '/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-  '/bower_components/bootstrap/dist/js/boostrap.js',
+  '/bower_components/jquery/dist/jquery.min.js',
+  '/bower_components/angular/angular.min.js',
+  '/bower_components/angular-route/angular-route.min.js',
+  //'/bower_components/angular-animate/angular-animate.js',
+  //'/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  //'/bower_components/bootstrap/dist/js/boostrap.js',
+  '/bower_components/ng-file-upload/ng-file-upload.min.js',
+  //'/bower_components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
   
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',

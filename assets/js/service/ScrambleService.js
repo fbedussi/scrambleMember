@@ -71,6 +71,15 @@ scrambleApp.service('ScrambleService', function($http, $q) {
             defer.reject(err);
           });
           return defer.promise;
+        },
+        'uploadAvatar': function(fileName, memberName) {
+                var defer = $q.defer();
+                $http.post('/api/v1/members/avatar', {file: fileName, name: memberName}).success(function(resp){
+                defer.resolve(resp);
+            }).error( function(err) {
+                defer.reject(err);
+            });
+            return defer.promise;
         }
     };
 });
