@@ -46,7 +46,7 @@
             </ol>
             <div class="membersGui" ng-show="membersView === 'gui'">
                 <div class="table"></div>
-                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'">
+                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'" style="width:{{100/(members.length/2) + '%'}}">
                     <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.pos}}</div>
