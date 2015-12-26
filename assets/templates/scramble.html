@@ -27,9 +27,9 @@
             <p>Selected team: {{selectedTeam.name}}</p>
             <p>Team members:</p>
             <fieldset>
-                <input id="membersList" type="radio" name="membersView" ng-click="membersView = 'list'" checked>
+                <input id="membersList" type="radio" name="membersView" ng-click="membersView = 'list'" ng-checked="membersView === 'list'">
                 <label for="membersList">View as a list</label>
-                <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" >
+                <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" ng-checked="membersView === 'gui'">
                 <label for="membersGui">View as a graphic</label>
             </fieldset>
             <ol ng-show="membersView === 'list'">
@@ -44,11 +44,12 @@
                     <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                 </li>
             </ol>
-            <div ng-show="membersView === 'gui'">
+            <div class="membersGui" ng-show="membersView === 'gui'">
                 <div class="table"></div>
-                <div class="memberGui" ng-repeat="singleMember in members | orderBy:'pos'">
+                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'">
                     <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
+                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.pos}}</div>
                 </div>
             </div>
         </fieldset>

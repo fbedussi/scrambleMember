@@ -1,3 +1,23 @@
-body {
-    color: red;
+.membersGui {
+    height: 500px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    
+    .member {
+        width: 20%;
+        text-align: center;
+    }
 }
+
+.table {
+    position: absolute;
+    border: solid 1px black;
+    width: 100%;
+    height: 200px;
+    top: 145px;
+    margin: 0 auto;
+}
+
+
