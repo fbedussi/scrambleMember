@@ -17,6 +17,7 @@ var tmpPath = '.tmp/public/';
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   //'bower_components/bootstrap/dist/css/bootstrap.css',
+  '/bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
   'styles/**/*.css'
 ];
 
@@ -35,6 +36,7 @@ var jsFilesToInject = [
   //'/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   //'/bower_components/bootstrap/dist/js/boostrap.js',
   '/bower_components/ng-file-upload/ng-file-upload.min.js',
+   '/bower_components/ng-img-crop/compile/minified/ng-img-crop.js',
   //'/bower_components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
   
   // Dependencies like jQuery, or Angular are brought in here

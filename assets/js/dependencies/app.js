@@ -1,6 +1,6 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload'])
+var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload', 'ngImgCrop'])
                             .filter('randomSrc', function () {
                                 return function (input) {
                                     if (input)
@@ -74,16 +74,19 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         });
     };
   
-    $scope.uploadAvatar = function(file) {
+    $scope.uploadAvatar = function(dataUrl) {
         //console.log(file);
-        if (!file) {
+        if (!dataUrl) {
             //console.log('no file');
             $scope.addMember();
         } else {
             //console.log('uploading file');
             var upload = Upload.upload({
                 url: '/api/v1/members/avatar/',
-                data: {file: file, name: $scope.formDataMember.name}
+                data: {
+                    file: Upload.dataUrltoBlob(dataUrl)
+                },
+                //data: {file: file, name: $scope.formDataMember.name}
             });
             
             // returns a promise
