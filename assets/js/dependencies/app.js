@@ -28,6 +28,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.selectedTeam = {};
   $scope.dataSeved = false;
   $scope.avatarUrl = '';
+  $scope.membersView = 'list';
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {

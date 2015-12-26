@@ -26,7 +26,13 @@
             <legend>Members</legend>
             <p>Selected team: {{selectedTeam.name}}</p>
             <p>Team members:</p>
-            <ol>
+            <fieldset>
+                <input id="membersList" type="radio" name="membersView" ng-click="membersView = 'list'" checked>
+                <label for="membersList">View as a list</label>
+                <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" >
+                <label for="membersGui">View as a graphic</label>
+            </fieldset>
+            <ol ng-show="membersView === 'list'">
                 <li ng-repeat="singleMember in members | orderBy:'pos'">
                     <span ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</span>
                     <form ng-show="memberEdit" ng-submit="memberEdit = false">
@@ -38,6 +44,13 @@
                     <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                 </li>
             </ol>
+            <div ng-show="membersView === 'gui'">
+                <div class="table"></div>
+                <div class="memberGui" ng-repeat="singleMember in members | orderBy:'pos'">
+                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
+                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
+                </div>
+            </div>
         </fieldset>
         <div ng-show="members.length">
             <button ng-click="scrambleMembers()">Scramble Members</button>
