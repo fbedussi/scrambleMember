@@ -1,6 +1,12 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload']);
+var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload'])
+                            .filter('randomSrc', function () {
+                                return function (input) {
+                                    if (input)
+                                        return input + '?r=' + Math.round(Math.random() * 999999);
+                                };
+                            });
 
 scrambleApp.config(['$routeProvider',
   function($routeProvider) {
@@ -69,21 +75,22 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     };
   
     $scope.uploadAvatar = function(file) {
-        console.log(file);
+        //console.log(file);
         if (!file) {
-            console.log('no file');
+            //console.log('no file');
             $scope.addMember();
         } else {
-            console.log('uploading file');
+            //console.log('uploading file');
             var upload = Upload.upload({
                 url: '/api/v1/members/avatar/',
-                data: {file: file}
+                data: {file: file, name: $scope.formDataMember.name}
             });
             
             // returns a promise
             upload.then(function(resp) {
                 //Uploaded successfully
-                $scope.avatarUrl = resp.data.fileName;
+                //console.log('upload ok');
+                $scope.avatarUrl = '/images/' + resp.data.fileName;
                 $scope.addMember();    
             }, function(resp) {
                 // handle error
@@ -103,8 +110,9 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         newMember.avatarUrl = $scope.avatarUrl;
         
         ScrambleService.addMember(newMember).then(function(response) {
-          $scope.members.push(response);
-          $scope.formDataMember = {};
+            //response.avatarUrl += '?r=' + Math.round(Math.random() * 999999);
+            $scope.members.push(response);
+            $scope.formDataMember = {};
         });    
     };
   

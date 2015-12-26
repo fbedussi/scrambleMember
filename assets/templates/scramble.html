@@ -34,6 +34,8 @@
                         <button type="submit" ng-click="editMember(singleMember)">save</button>
                     </form>
                     <button ng-click="removeMember(singleMember)">del</button>
+                    <!--<img ng-if="avatar.$ngfBlobUrl && formDataMember.name == singleMember.name" ng-src="{{avatar.$ngfBlobUrl}}"/>-->
+                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                 </li>
             </ol>
         </fieldset>
@@ -45,6 +47,7 @@
         <form method="post">
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
             <input type="file" name="avatar" ngf-select="" ng-model="avatar" >
+            <img ngf-src="avatar">
             <button ng-click="uploadAvatar(avatar)">Add Member</button>
         </form>
     

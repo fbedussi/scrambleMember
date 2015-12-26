@@ -5,6 +5,9 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var path = require('path');
+var fs = require('fs');
+
 module.exports = {
 	deleteMember: function(req, res) {
         var criteria =  (req.param('id')) ? {id: req.param('id')} : {};
@@ -53,9 +56,12 @@ module.exports = {
 		});
     },
     uploadAvatar: function (req, res) {
-        //console.log(req.file('file'));
+        var saveDir = 'images';
+        
         req.file('file').upload({
             // don't allow the total upload size to exceed ~10MB
+            //dirname: '../public/' + saveDir + '/',
+            dirname: '../../assets/' + saveDir + '/',
             maxBytes: 10000000
         },function whenDone(err, uploadedFiles) {
             if (err) {
@@ -66,15 +72,25 @@ module.exports = {
             if (uploadedFiles.length === 0){
                 return res.badRequest('No file was uploaded');
             }
-        
-            // If a file was uploaded return the url        
-            return res.json({
-              // Generate a unique URL where the avatar can be downloaded.
-              url: require('util').format('%s/members/avatar/%s', sails.getBaseUrl(), req.body.name),
-        
-              // Grab the first file and use it's `fd` (file descriptor)
-              fileName: uploadedFiles[0].fd
+            
+            //Copy the file from /asset to /.tmp in order to access it immediately
+            var destPath = path.join('.tmp', 'public', 'images', path.basename(uploadedFiles[0].fd));
+            var writable = fs.createWriteStream(destPath);
+            fs.createReadStream(uploadedFiles[0].fd).pipe(writable);
+            
+            writable.on('finish', function() {
+                // If a file was uploaded return the url        
+                return res.json({
+                  // Generate a unique URL where the avatar can be downloaded.
+                  url: require('util').format('%s/members/avatar/%s', sails.getBaseUrl(), req.body.name),
+            
+                  // Grab the first file and use it's `fd` (file descriptor)
+                  pubDirName: saveDir,
+                  fileName: path.basename(uploadedFiles[0].fd)
+                });    
             });
+        
+            
         });
   }
 };
