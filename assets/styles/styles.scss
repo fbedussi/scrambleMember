@@ -1,12 +1,13 @@
 .membersGui {
     height: 500px;
     position: relative;
-    display: flex;
+    /*display: flex;
     flex-wrap: wrap;
-    align-content: space-between;
+    align-content: space-between;*/
     
     .member {
         //width: 20%;
+        position: absolute;
         text-align: center;
         transition: all 0.5s;
     }

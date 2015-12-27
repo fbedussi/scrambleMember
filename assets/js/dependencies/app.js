@@ -66,6 +66,10 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     $scope.selectedTeam = team;
     ScrambleService.getTeamMembers(team).then(function(response) {
       $scope.members = response;
+      
+      $scope.members.forEach(function(member, i) {
+        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
+    });
     });
   };
   
@@ -113,9 +117,11 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         newMember.name = $scope.formDataMember.name;
         newMember.team = $scope.selectedTeam.id;
         newMember.avatarUrl = $scope.avatarUrl;
+        newMember.pos = $scope.members.length + 1;
         
         ScrambleService.addMember(newMember).then(function(response) {
             //response.avatarUrl += '?r=' + Math.round(Math.random() * 999999);
+            response.coordinates = getCoordinates(response.pos, response.pos, {});
             $scope.members.push(response);
             $scope.formDataMember = {};
         });    
@@ -127,6 +133,23 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     });
   };
   
+  function getCoordinates(pos, totalPos, customOptions) {
+        var options = {
+            useAllSides: false,
+            secondRowY: '73%'
+        };
+        var coordinates = {};
+        var halfPos = Math.ceil(totalPos/2);
+        var col = (pos <= halfPos)? pos : pos - halfPos;
+        
+        $.extend(options, customOptions);
+        
+        coordinates.y = (pos <= halfPos)? '0' : options.secondRowY;
+        coordinates.x = (100/halfPos)*(col - 1) + '%';
+        
+        return coordinates;
+    }
+    
   $scope.scrambleMembers = function() {
     var positions = [];
     var j, x, i;
@@ -135,6 +158,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     for(i = positions.length; i; j = parseInt(Math.random() * i), x = positions[--i], positions[i] = positions[j], positions[j] = x);
     $scope.members.forEach(function(member, i) {
         member.pos = positions[i];
+        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
     });
     
     ScrambleService.updateMembers($scope.members).then(function(response) {
