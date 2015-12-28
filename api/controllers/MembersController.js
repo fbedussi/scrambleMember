@@ -44,7 +44,7 @@ module.exports = {
         }
 
 		members.forEach(function(member) {
-			MembersService.updateMember({id: member.id}, {team: member.team, name: member.name, pos: member.pos}, function(success) {
+			MembersService.updateMember({id: member.id}, member, function(success) {
 				counter++;
 				
 				if (counter === members.length) {

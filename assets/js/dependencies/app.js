@@ -37,6 +37,12 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     }
   }
   
+  function updateMembersPos() {
+    $scope.members.forEach(function(member, i) {
+        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
+    });
+  }
+  
   ScrambleService.getTeams().then(function(response) {
     $scope.teams = response;
     
@@ -67,9 +73,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     ScrambleService.getTeamMembers(team).then(function(response) {
       $scope.members = response;
       
-      $scope.members.forEach(function(member, i) {
-        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
-    });
+      updateMembersPos();
     });
   };
   
@@ -81,55 +85,55 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     };
   
     $scope.uploadAvatar = function(dataUrl) {
-        //console.log(file);
-        if (!dataUrl) {
-            //console.log('no file');
-            $scope.addMember();
-        } else {
             //console.log('uploading file');
-            var upload = Upload.upload({
+            return Upload.upload({
                 url: '/api/v1/members/avatar/',
                 data: {
                     file: Upload.dataUrltoBlob(dataUrl)
-                },
-                //data: {file: file, name: $scope.formDataMember.name}
+                }
             });
-            
-            // returns a promise
-            upload.then(function(resp) {
-                //Uploaded successfully
-                //console.log('upload ok');
-                $scope.avatarUrl = '/images/' + resp.data.fileName;
-                $scope.addMember();    
-            }, function(resp) {
-                // handle error
-                $scope.addMember();
-            }, function(evt) {
-                // progress notify
-                //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
-            });   
-        }
     };
     
-    $scope.addMember = function() {
+    $scope.addMember = function(dataUrl) {
+        
+        function saveMember(newMember) {
+            ScrambleService.addMember(newMember).then(function(response) {
+                $scope.members.push(response);
+                updateMembersPos();
+                $scope.formDataMember = {};
+            });    
+        }
+        
         var newMember = {};
         
         newMember.name = $scope.formDataMember.name;
         newMember.team = $scope.selectedTeam.id;
-        newMember.avatarUrl = $scope.avatarUrl;
+        newMember.avatarUrl = '';
         newMember.pos = $scope.members.length + 1;
         
-        ScrambleService.addMember(newMember).then(function(response) {
-            //response.avatarUrl += '?r=' + Math.round(Math.random() * 999999);
-            response.coordinates = getCoordinates(response.pos, response.pos, {});
-            $scope.members.push(response);
-            $scope.formDataMember = {};
-        });    
+        if (!dataUrl) {
+            saveMember(newMember);
+            return;
+        }
+            
+        $scope.uploadAvatar(dataUrl).then(function(resp) {
+            //Uploaded successfully
+            //console.log('upload ok');
+            newMember.avatarUrl = '/images/' + resp.data.fileName;
+            saveMember(newMember);
+        }, function(resp) {
+            // handle error
+            saveMember(newMember);
+        }, function(evt) {
+            // progress notify
+            //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
+        });   
     };
   
    $scope.removeMember = function(member) {
     ScrambleService.removeMember(member).then(function(response) {
       $scope.members.splice($scope.members.indexOf(member), 1);
+      updateMembersPos();
     });
   };
   
@@ -173,10 +177,33 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     });
   };
   
-  $scope.editMember = function(member) {
-    ScrambleService.updateMembers(member).then(function(response) {
-       console.log('member saved');
-    });
+  $scope.editMember = function(member, dataUrl) {
+    
+    function saveChanges(member) {
+        ScrambleService.updateMembers(member).then(function(response) {
+            console.log('member saved');
+        });
+        member.memberAvatarEdit = false;
+    }
+    
+    if (!dataUrl) {
+        saveChanges(member);
+        return;
+    }
+    
+    $scope.uploadAvatar(dataUrl).then(function(resp) {
+        //Uploaded successfully
+        //console.log('upload ok');
+        member.avatarUrl = '/images/' + resp.data.fileName;
+        saveChanges(member);
+        
+    }, function(resp) {
+        // handle error
+        saveChanges(member);
+    }, function(evt) {
+        // progress notify
+        //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
+    });   
   };
 
   
