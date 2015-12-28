@@ -1,5 +1,5 @@
 .membersGui {
-    height: 500px;
+    height: 550px;
     position: relative;
     /*display: flex;
     flex-wrap: wrap;
@@ -20,6 +20,11 @@
     height: 200px;
     top: 145px;
     margin: 0 auto;
+    
+    .useAllSides & {
+        width: 80%;
+        margin: 0 10%;
+    }
 }
 
 

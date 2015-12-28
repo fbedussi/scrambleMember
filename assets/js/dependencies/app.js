@@ -30,6 +30,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.avatarUrl = '';
   $scope.membersView = 'gui';
   $scope.membersWidth = 100/($scope.members.length/2) + '%';
+  $scope.useAllSides = false;
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {
@@ -39,9 +40,11 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   
   function updateMembersPos() {
     $scope.members.forEach(function(member, i) {
-        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
+        member.style = getStyle(member.pos, $scope.members.length, {});
     });
   }
+  
+  $scope.updateMembersPos = updateMembersPos;
   
   ScrambleService.getTeams().then(function(response) {
     $scope.teams = response;
@@ -137,21 +140,48 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     });
   };
   
-  function getCoordinates(pos, totalPos, customOptions) {
+  function getStyle(pos, totalPos) {
         var options = {
-            useAllSides: false,
-            secondRowY: '73%'
+            useAllSides: $scope.useAllSides,
+            height: '33'
         };
-        var coordinates = {};
+        
+        var style = {};
         var halfPos = Math.ceil(totalPos/2);
         var col = (pos <= halfPos)? pos : pos - halfPos;
+        var width = 100/halfPos;
+        var left = (100/halfPos)*(col - 1);
         
-        $.extend(options, customOptions);
+        style.height = options.height + '%';
         
-        coordinates.y = (pos <= halfPos)? '0' : options.secondRowY;
-        coordinates.x = (100/halfPos)*(col - 1) + '%';
+        style.top = (pos <= halfPos)? '0' : 'auto';
+        style.bottom = (pos <= halfPos)? 'auto' : '0';
+        style.left = left + '%';
         
-        return coordinates;
+        if (options.useAllSides) {
+            width = 100/(halfPos+2);
+            
+            if (pos === 1) {
+                style.top = '50' - options.height/2 + '%';
+                style.bottom = 'auto';
+                style.left = '0';
+                return style;
+            }
+            
+            if (pos === halfPos + 1) {
+                style.top = '50' - options.height/2 + '%';
+                style.bottom = 'auto';
+                style.left = 'auto';
+                style.right = '0';
+                return style;
+            }
+            
+            style.left =  left - width/2 + '%';
+        }
+        
+        style.width =  width + '%';
+        
+        return style;
     }
     
   $scope.scrambleMembers = function() {
@@ -162,7 +192,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     for(i = positions.length; i; j = parseInt(Math.random() * i), x = positions[--i], positions[i] = positions[j], positions[j] = x);
     $scope.members.forEach(function(member, i) {
         member.pos = positions[i];
-        member.coordinates = getCoordinates(member.pos, $scope.members.length, {});
+        member.style = getStyle(member.pos, $scope.members.length, {});
     });
     
     ScrambleService.updateMembers($scope.members).then(function(response) {

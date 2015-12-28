@@ -10,6 +10,7 @@
                     <form ng-show="teamEdit" ng-submit="teamEdit = false">
                         <input type="text" ng-model="singleTeam.name">
                         <button type="submit" ng-click="editTeam(singleTeam)">save</button>
+                        <button type="submit">cancel</button>
                     </form>
                     <button ng-click="removeTeam(singleTeam)">del</button>
                 </div>
@@ -30,6 +31,10 @@
                 <label for="membersList">View as a list</label>
                 <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" ng-checked="membersView === 'gui'">
                 <label for="membersGui">View as a graphic</label>
+                <div ng-show="membersView === 'gui'">
+                    <input id="useAllSides" type="checkbox" ng-model="useAllSides" ng-change="updateMembersPos()">
+                    <label for="useAllSides">Use all sides</label>
+                </div>
             </fieldset>
             <ol ng-show="membersView === 'list'">
                 <li ng-repeat="singleMember in members | orderBy:'pos'">
@@ -47,6 +52,7 @@
                         </div>
                         
                         <button ng-click="editMember(singleMember, croppedDataUrl)">Save avatar</button>
+                        <button ng-click="singleMember.memberAvatarEdit = false">cancel</button>
                             
                         <span class="progress" ng-show="progress >= 0">
                           <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
@@ -60,15 +66,23 @@
                     <form ng-show="singleMember.memberEdit" ng-submit="singleMember.memberEdit = false">
                         <input type="text" ng-model="singleMember.name">
                         <button type="submit" ng-click="editMember(singleMember)">save</button>
+                        <button type="submit">cancel</button>
                     </form>
                     <button ng-click="removeMember(singleMember)">del</button>
                     
                     
                 </li>
             </ol>
-            <div class="membersGui" ng-show="membersView === 'gui'">
+            <div class="membersGui" ng-show="membersView === 'gui'" ng-class="{useAllSides: useAllSides}">
                 <div class="table"></div>
-                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'" style="width:{{100/(members.length/2) + '%'}}; top: {{singleMember.coordinates.y}}; left: {{singleMember.coordinates.x}}">
+                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'"
+                     style="top: {{singleMember.style.top}};
+                        bottom: {{singleMember.style.bottom}};
+                        left: {{singleMember.style.left}};
+                        right: {{singleMember.style.right}};
+                        width: {{singleMember.style.width}};
+                        height: {{singleMember.style.height}};
+                    ">
                     <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.pos}}</div>
