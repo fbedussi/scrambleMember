@@ -1,78 +1,91 @@
-<div ng-controller="ScrambleCtrl as scramble">
-    <div>
-        <h1><%= __('Title') %></h1>
-        <div>
-            <fieldset>
-                <legend><%= __('teams') %></legend>
-                <div ng-repeat="singleTeam in teams">
-                    <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
-                    <span ng-hide="teamEdit" ng-click="teamEdit = true">{{singleTeam.name}}</span>
-                    <form ng-show="teamEdit" ng-submit="teamEdit = false">
-                        <input type="text" ng-model="singleTeam.name">
-                        <button type="submit" ng-click="editTeam(singleTeam)"><%= __('save') %></button>
-                        <button type="submit"><%= __('cancel') %></button>
-                    </form>
-                    <button ng-click="removeTeam(singleTeam)">del</button>
-                </div>
-            </fieldset>
-            <form>
-                <input type="text" placeholder="Enter new team name" ng-model="formDataNewTeam.name">
-                <button type="submit" ng-click="addTeam()"><%= __('addTeam') %></button>
-            </form>
-        </div>
+<h1><%= __('Title') %></h1>
+<main ng-controller="ScrambleCtrl as scramble">
+    <div class="teams">
+        <fieldset>
+            <legend><%= __('teams') %></legend>
+            <table>
+                <tr ng-repeat="singleTeam in teams" class="team">
+                    <td>
+                        <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
+                    </td>
+                    <td>
+                        <span ng-hide="teamEdit" ng-click="teamEdit = true" class="teamName">{{singleTeam.name}}</span>
+                        <form ng-show="teamEdit" ng-submit="teamEdit = false">
+                            <input type="text" ng-model="singleTeam.name">
+                            <button type="submit" ng-click="editTeam(singleTeam)"><%= __('save') %></button>
+                            <button type="submit"><%= __('cancel') %></button>
+                        </form>
+                    </td>
+                    <td>
+                        <button ng-click="removeTeam(singleTeam)"><%= __('del') %></button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <form class="addForm">
+            <input type="text" placeholder="Enter new team name" ng-model="formDataNewTeam.name">
+            <button type="submit" ng-click="addTeam()"><%= __('addTeam') %></button>
+        </form>
     </div>
     <div ng-show="selectedTeam.name">    
-        <fieldset>
-            <legend><%= __('members') %></legend>
-            <p><%= __('selectedTeam') %> {{selectedTeam.name}}</p>
-            <p><%= __('teamMembers') %></p>
+        <fieldset class="members">
+            <legend><%= __('teamMembers') %> {{selectedTeam.name}}</legend>
+
             <fieldset>
                 <input id="membersList" type="radio" name="membersView" ng-click="membersView = 'list'" ng-checked="membersView === 'list'">
                 <label for="membersList"><%= __('viewAsAList') %></label>
                 <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" ng-checked="membersView === 'gui'">
                 <label for="membersGui"><%= __('viewAsAGraphic') %></label>
-                <div ng-show="membersView === 'gui'">
+                <span ng-show="membersView === 'gui'">
                     <input id="useAllSides" type="checkbox" ng-model="useAllSides" ng-change="updateMembersPos()">
                     <label for="useAllSides"><%= __('useAllSides') %></label>
-                </div>
+                </span>
             </fieldset>
-            <ol ng-show="membersView === 'list'">
-                <li ng-repeat="singleMember in members | orderBy:'pos'">
-                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}" ng-click="singleMember.memberAvatarEdit = true"/>
-                    {{memberAvatarEdit}}
-                    <div ng-show="singleMember.memberAvatarEdit">
-                        <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
-                        <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px">
-                            <img-crop image="avatar  | ngfDataUrl"                 
-                            result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
-                            </img-crop>
-                        </div>
-                        <div>
-                            <img ng-src="{{croppedDataUrl}}" />
-                        </div>
-                        
-                        <button ng-click="editMember(singleMember, croppedDataUrl)"><%= __('saveAvatar') %></button>
-                        <button ng-click="singleMember.memberAvatarEdit = false"><%= __('cancel') %></button>
+            <table ng-show="membersView === 'list'" class="membersList"> 
+                <tr ng-repeat="singleMember in members | orderBy:'pos'">
+                    <!--<td>{{singleMember.pos}}</td>-->
+                    <td>
+                        <img class="avatar" ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}" ng-click="singleMember.memberAvatarEdit = true"/>
+                    </td>
+                    
+                    <td ng-show="singleMember.memberAvatarEdit">
+                            <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
                             
-                        <span class="progress" ng-show="progress >= 0">
-                          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-                        </span>
-                        <span ng-show="result">Upload Successful</span>
-                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-                    </div>
+                            <div class="avatarEdit">
+                                <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px">
+                                    <img-crop image="avatar  | ngfDataUrl"                 
+                                    result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
+                                    </img-crop>
+                                </div>
+                                <div class="avatarResized">
+                                    <img class="avatar" ng-src="{{croppedDataUrl}}" />
+                                </div>
+                            </div>
+                            
+                            <button ng-click="editMember(singleMember, croppedDataUrl)"><%= __('saveAvatar') %></button>
+                            <button ng-click="singleMember.memberAvatarEdit = false"><%= __('cancel') %></button>
+                                
+                            <span class="progress" ng-show="progress >= 0">
+                              <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                            </span>
+                            <span ng-show="result">Upload Successful</span>
+                            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                        </td>
                     
-                    
-                    <span ng-hide="singleMember.memberEdit" ng-click="singleMember.memberEdit = true">{{singleMember.name}}</span>
-                    <form ng-show="singleMember.memberEdit" ng-submit="singleMember.memberEdit = false">
-                        <input type="text" ng-model="singleMember.name">
-                        <button type="submit" ng-click="editMember(singleMember)">save</button>
-                        <button type="submit"><%= __('cancel') %></button>
-                    </form>
-                    <button ng-click="removeMember(singleMember)"><%= __('del') %></button>
-                    
-                    
-                </li>
-            </ol>
+                    <td>
+                        <span ng-hide="singleMember.memberEdit" ng-click="singleMember.memberEdit = true">{{singleMember.name}}</span>
+                        <form ng-show="singleMember.memberEdit" ng-submit="singleMember.memberEdit = false">
+                            <input type="text" ng-model="singleMember.name">
+                            <button type="submit" ng-click="editMember(singleMember)"><%= __('save') %></button>
+                            <button type="submit"><%= __('cancel') %></button>
+                        </form>
+                    </td>
+                    <td ng-hide="singleMember.memberAvatarEdit">
+                        <button ng-click="removeMember(singleMember)"><%= __('del') %></button>
+                    </td>
+                </tr>
+            </table>
+            
             <div class="membersGui" ng-show="membersView === 'gui'" ng-class="{useAllSides: useAllSides}">
                 <div class="table"></div>
                 <div class="member" ng-repeat="singleMember in members | orderBy:'pos'"
@@ -83,32 +96,36 @@
                         width: {{singleMember.style.width}};
                         height: {{singleMember.style.height}};
                     ">
-                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
-                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
-                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.pos}}</div>
+                    <img class="avatar" ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
+                    <div class="memberName" ng-hide="memberEdit" ng-click="memberEdit = true"><span>{{singleMember.name}}</span></div>
+                    <div ng-hide="memberEdit" ng-click="memberEdit = true" class="memberPos"><span>{{singleMember.pos}}</span></div>
                 </div>
             </div>
         </fieldset>
-        <div ng-show="members.length">
+        <div class="scrambleBtn" ng-show="members.length">
+            <span class="alert" ng-show="dataSaved"><%= __('saved') %></span>
             <button ng-click="scrambleMembers()"><%= __('scrambleMembers') %></button>
-            <span ng-show="dataSaved"><%= __('saved') %></span>
         </div>
         
-        <form method="post">
+        <form method="post" class="addMemberForm">
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
 
             <div ng-show="formDataMember.name">
                 <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
-                <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px">
-                    <img-crop image="avatar  | ngfDataUrl"                 
-                    result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
-                    </img-crop>
-                </div>
-                <div>
-                    <img ng-src="{{croppedDataUrl}}" />
+                
+                <div class="avatarEdit">
+                    <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px" class="avatarOriginal">
+                        <img-crop image="avatar  | ngfDataUrl"                 
+                        result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
+                        </img-crop>
+                    </div>
+                    <div class="avatarResized">
+                        <img class="avatar" ng-src="{{croppedDataUrl}}" />
+                    </div>
                 </div>
                 
-                <button ng-click="addMember(croppedDataUrl)"><%= __('addMember') %></button>
+                <button ng-click="addMember(croppedDataUrl)" class="addBtn"><%= __('addMember') %></button>
+                <button ng-click="formDataMember.name = ''" class="addBtn"><%= __('cancel') %></button>
                     
                 <span class="progress" ng-show="progress >= 0">
                   <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
@@ -117,5 +134,5 @@
                 <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
             </div>
     </div>
-</div>
+</main>
 

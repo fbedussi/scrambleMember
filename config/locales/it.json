@@ -3,7 +3,7 @@
     "teams": "team",
 	"save": "salva",
 	"cancel": "annulla",
-	"addTeam": "aggiuungi team",
+	"addTeam": "aggiungi team",
 	"members": "membri",
 	"selectedTeam": "team selezionato:",
 	"teamMembers": "membri del team",
@@ -14,6 +14,6 @@
 	"saveAvatar": "salva l'avatar",
 	"del": "elimina",
 	"scrambleMembers": "scambia le posizioni",
-	"saved": "salvagto",
+	"saved": "salvato",
 	"addMember": "aggiungi membro"
 }

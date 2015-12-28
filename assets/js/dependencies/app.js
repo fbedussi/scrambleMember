@@ -225,19 +225,19 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         return;
     }
     
-    //$scope.uploadAvatar(dataUrl).then(function(resp) {
-    //    //Uploaded successfully
-    //    //console.log('upload ok');
-    //    member.avatarUrl = '/images/' + resp.data.fileName;
-    //    saveChanges(member);
-    //    
-    //}, function(resp) {
-    //    // handle error
-    //    saveChanges(member);
-    //}, function(evt) {
-    //    // progress notify
-    //    //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
-    //});   
+    $scope.uploadAvatar(dataUrl).then(function(resp) {
+        //Uploaded successfully
+        //console.log('upload ok');
+        member.avatarUrl = '/images/' + resp.data.fileName;
+        saveChanges(member);
+        
+    }, function(resp) {
+        // handle error
+        saveChanges(member);
+    }, function(evt) {
+        // progress notify
+        //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
+    });   
   };
 
   
