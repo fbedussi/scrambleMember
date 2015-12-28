@@ -1,67 +1,121 @@
-<!-- Default home page -->
-
-
-
-
-<div class="default-page">
-    <div class="header">
-        <h1 id="main-title" class="container"><%= __('A brand new app.') %></h1>
-        <h3 class="container">You're looking at: <code><%= view.pathFromApp + '.' +view.ext %></code></h3>
-    </div>
-    <div class="main container clearfix">
-        <!-- <h1>Getting started</h1>
-        <p>Don't worry, we've got your back.</p> -->
-        <ul class="getting-started">
-            <li class="clearfix">
-                <div class="step">
-                    <div class="sprite one"></div>
-                    <h3>Generate a REST API.</h3>
-                    <p>
-                        Run <code>sails generate api user</code>.  This will create two files: a <a href="http://sailsjs.org/#!/documentation/concepts/ORM/Models.html">model</a> <code class="pocket">api/models/User.js</code> and a <a href="http://sailsjs.org/#!/documentation/concepts/Controllers">controller</a><code class="pocket">api/controllers/UserController.js</code>.
-                    </p>
+<div ng-controller="ScrambleCtrl as scramble">
+    <div>
+        <h1><%= __('Title') %></h1>
+        <div>
+            <fieldset>
+                <legend><%= __('teams') %></legend>
+                <div ng-repeat="singleTeam in teams">
+                    <input type="radio" name="team" ng-click="selectTeam(singleTeam)" ng-checked="singleTeam === selectedTeam">
+                    <span ng-hide="teamEdit" ng-click="teamEdit = true">{{singleTeam.name}}</span>
+                    <form ng-show="teamEdit" ng-submit="teamEdit = false">
+                        <input type="text" ng-model="singleTeam.name">
+                        <button type="submit" ng-click="editTeam(singleTeam)"><%= __('save') %></button>
+                        <button type="submit"><%= __('cancel') %></button>
+                    </form>
+                    <button ng-click="removeTeam(singleTeam)">del</button>
                 </div>
-            </li>
-            <li class="clearfix">
-                <div class="step">
-                    <div class="sprite two"></div>
-                    <h3>
-                        Lift your app.
-                    </h3>
-                    <p>
-                        Run <code>sails lift</code> to start up your app server.  If you visit <a target="_blank" href="http://localhost:1337/user"><code>http://localhost:1337/user</code></a> in your browser, you'll see a <a href="http://sailsjs.org/#!/documentation/reference/blueprint-api">WebSocket-compatible</a> user API.
-                    </p>
-                </div>
-            </li>
-            <li class="clearfix">
-                <div class="step">
-                    <div class="sprite three"></div>
-                    <h3>
-                        Dive in.
-                    </h3>
-                    <p>Blueprints are just the beginning.  You'll probably also want to learn how to customize your app's <a href="http://sailsjs.org/#!/documentation/concepts/Routes">routes</a>, set up <a href="http://sailsjs.org/#!/documentation/concepts/Policies">security policies</a>, configure your <a href="http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html">data sources</a>, and build custom <a target="_blank" href="http://sailsjs.org/#!/documentation/concepts/Controllers?q=actions">controller actions</a>. For more help getting started, check out the links on this page.</p>
-
-                </div>
-            </li>
-        </ul>
-        <div class="links">
-            <!-- <h3>Links</h3> -->
-            <ul class="link-list">
-
-                <h4>Docs</h4>
-                <a target="_blank" href="http://sailsjs.org/#!/documentation/anatomy/myApp"><li>App Structure</li></a>
-                <a target="_blank" href="http://sailsjs.org/#!/documentation/reference"><li>Reference</li></a>
-                <a target="_blank" href="http://sailsjs.org/#!/documentation/concepts/extending-sails/Adapters/adapterList.html"><li>Supported Databases</li></a>
-
-                <h4>Tutorials</h4>
-                <a target="_blank" href="https://github.com/sails101"><li>Sails 101</li></a>
-
-                <h4>Community</h4>
-                <a target="_blank" href="http://stackoverflow.com/search?q=sails.js"><li>StackOverFlow</li></a>
-                <a target="_blank" href="https://github.com/balderdashy/sails"><li>GitHub</li></a>
-                <a target="_blank" href="https://groups.google.com/forum/#!forum/sailsjs"><li>Google Group</li></a>
-                <a target="_blank" href="http://webchat.freenode.net/"><li>IRC (#sailsjs on freenode)</li></a>
-
-            </ul>
+            </fieldset>
+            <form>
+                <input type="text" placeholder="Enter new team name" ng-model="formDataNewTeam.name">
+                <button type="submit" ng-click="addTeam()"><%= __('addTeam') %></button>
+            </form>
         </div>
     </div>
+    <div ng-show="selectedTeam.name">    
+        <fieldset>
+            <legend><%= __('members') %></legend>
+            <p><%= __('selectedTeam') %> {{selectedTeam.name}}</p>
+            <p><%= __('teamMembers') %></p>
+            <fieldset>
+                <input id="membersList" type="radio" name="membersView" ng-click="membersView = 'list'" ng-checked="membersView === 'list'">
+                <label for="membersList"><%= __('viewAsAList') %></label>
+                <input id="membersGui" type="radio" name="membersView" ng-click="membersView = 'gui'" ng-checked="membersView === 'gui'">
+                <label for="membersGui"><%= __('viewAsAGraphic') %></label>
+                <div ng-show="membersView === 'gui'">
+                    <input id="useAllSides" type="checkbox" ng-model="useAllSides" ng-change="updateMembersPos()">
+                    <label for="useAllSides"><%= __('useAllSides') %></label>
+                </div>
+            </fieldset>
+            <ol ng-show="membersView === 'list'">
+                <li ng-repeat="singleMember in members | orderBy:'pos'">
+                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}" ng-click="singleMember.memberAvatarEdit = true"/>
+                    {{memberAvatarEdit}}
+                    <div ng-show="singleMember.memberAvatarEdit">
+                        <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
+                        <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px">
+                            <img-crop image="avatar  | ngfDataUrl"                 
+                            result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
+                            </img-crop>
+                        </div>
+                        <div>
+                            <img ng-src="{{croppedDataUrl}}" />
+                        </div>
+                        
+                        <button ng-click="editMember(singleMember, croppedDataUrl)"><%= __('saveAvatar') %></button>
+                        <button ng-click="singleMember.memberAvatarEdit = false"><%= __('cancel') %></button>
+                            
+                        <span class="progress" ng-show="progress >= 0">
+                          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                        </span>
+                        <span ng-show="result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </div>
+                    
+                    
+                    <span ng-hide="singleMember.memberEdit" ng-click="singleMember.memberEdit = true">{{singleMember.name}}</span>
+                    <form ng-show="singleMember.memberEdit" ng-submit="singleMember.memberEdit = false">
+                        <input type="text" ng-model="singleMember.name">
+                        <button type="submit" ng-click="editMember(singleMember)">save</button>
+                        <button type="submit"><%= __('cancel') %></button>
+                    </form>
+                    <button ng-click="removeMember(singleMember)"><%= __('del') %></button>
+                    
+                    
+                </li>
+            </ol>
+            <div class="membersGui" ng-show="membersView === 'gui'" ng-class="{useAllSides: useAllSides}">
+                <div class="table"></div>
+                <div class="member" ng-repeat="singleMember in members | orderBy:'pos'"
+                     style="top: {{singleMember.style.top}};
+                        bottom: {{singleMember.style.bottom}};
+                        left: {{singleMember.style.left}};
+                        right: {{singleMember.style.right}};
+                        width: {{singleMember.style.width}};
+                        height: {{singleMember.style.height}};
+                    ">
+                    <img ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
+                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.name}}</div>
+                    <div ng-hide="memberEdit" ng-click="memberEdit = true">{{singleMember.pos}}</div>
+                </div>
+            </div>
+        </fieldset>
+        <div ng-show="members.length">
+            <button ng-click="scrambleMembers()"><%= __('scrambleMembers') %></button>
+            <span ng-show="dataSaved"><%= __('saved') %></span>
+        </div>
+        
+        <form method="post">
+            <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
+
+            <div ng-show="formDataMember.name">
+                <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
+                <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px">
+                    <img-crop image="avatar  | ngfDataUrl"                 
+                    result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
+                    </img-crop>
+                </div>
+                <div>
+                    <img ng-src="{{croppedDataUrl}}" />
+                </div>
+                
+                <button ng-click="addMember(croppedDataUrl)"><%= __('addMember') %></button>
+                    
+                <span class="progress" ng-show="progress >= 0">
+                  <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                </span>
+                <span ng-show="result">Upload Successful</span>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+            </div>
+    </div>
 </div>
+

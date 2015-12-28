@@ -1,4 +1,19 @@
 {
-	"Welcome": "Welcome",
-	"A brand new app.": "A brand new app."
+	"Title": "Team members position scramble",
+    "teams": "teams",
+	"save": "save",
+	"cancel": "cancel",
+	"addTeam": "add team",
+	"members": "members",
+	"selectedTeam": "selected team:",
+	"teamMembers": "team members",
+	"viewAsAList": "view as a list",
+	"viewAsAGraphic": "view as a graphic",
+	"useAllSides": "use all sides",
+	"selectPicture": "select picture",
+	"saveAvatar": "save avatar",
+	"del": "del",
+	"scrambleMembers": "scramble members",
+	"saved": "saved",
+	"addMember": "add member"
 }

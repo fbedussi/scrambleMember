@@ -35,6 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
+  //'/:lang?': 'LocalizeController.goToView',
 
   /***************************************************************************
   *                                                                          *

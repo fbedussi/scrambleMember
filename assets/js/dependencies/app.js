@@ -1,6 +1,6 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload', 'ngImgCrop'])
+var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop'])
                             .filter('randomSrc', function () {
                                 return function (input) {
                                     if (input)
@@ -8,18 +8,19 @@ var scrambleApp = angular.module('scrambleApp', ['ngRoute', 'ngFileUpload', 'ngI
                                 };
                             });
 
-scrambleApp.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.when('/', {
-      templateUrl: '/templates/scramble.html',
-      controller: 'ScrambleCtrl'
-    }).otherwise({
-      redirectTo: '/',
-      caseInsensitiveMatch: true
-    });
-  }]);
+//scrambleApp.config(['$routeProvider',
+//  function($routeProvider) {
+//    $routeProvider.when('/', {
+//      //templateUrl: '/templates/scramble.html',
+//      controller: 'ScrambleCtrl'
+//    }).otherwise({
+//      redirectTo: '/',
+//      caseInsensitiveMatch: true
+//    });
+//  }]);
 
-scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService', function($scope, Upload, $rootScope, $timeout, ScrambleService) {
+scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService',
+                                        function($scope, Upload, $rootScope, $timeout, ScrambleService) {
   $scope.formDataNewTeam = {};
   $scope.formDataEditTeam = {};
   $scope.formDataMember = {};
@@ -37,6 +38,9 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         $scope.selectTeam($scope.teams[0]);
     }
   }
+  
+  //$locationProvider.html5Mode(true);
+  //$location.path('/en');
   
   function updateMembersPos() {
     $scope.members.forEach(function(member, i) {
@@ -71,14 +75,14 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
       });
     };
   
-  $scope.selectTeam = function(team) {
-    $scope.selectedTeam = team;
-    ScrambleService.getTeamMembers(team).then(function(response) {
-      $scope.members = response;
-      
-      updateMembersPos();
-    });
-  };
+    $scope.selectTeam = function(team) {
+        $scope.selectedTeam = team;
+        ScrambleService.getTeamMembers(team).then(function(response) {
+            $scope.members = response;
+            
+            updateMembersPos();
+        });
+    };
   
     $scope.editTeam = function(team) {  
         ScrambleService.editTeam(team).then(function(response) {
@@ -221,19 +225,19 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         return;
     }
     
-    $scope.uploadAvatar(dataUrl).then(function(resp) {
-        //Uploaded successfully
-        //console.log('upload ok');
-        member.avatarUrl = '/images/' + resp.data.fileName;
-        saveChanges(member);
-        
-    }, function(resp) {
-        // handle error
-        saveChanges(member);
-    }, function(evt) {
-        // progress notify
-        //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
-    });   
+    //$scope.uploadAvatar(dataUrl).then(function(resp) {
+    //    //Uploaded successfully
+    //    //console.log('upload ok');
+    //    member.avatarUrl = '/images/' + resp.data.fileName;
+    //    saveChanges(member);
+    //    
+    //}, function(resp) {
+    //    // handle error
+    //    saveChanges(member);
+    //}, function(evt) {
+    //    // progress notify
+    //    //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
+    //});   
   };
 
   

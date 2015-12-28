@@ -1,0 +1,19 @@
+{
+	"Title": "Scambiatore di posizione per i membri dei team",
+    "teams": "team",
+	"save": "salva",
+	"cancel": "annulla",
+	"addTeam": "aggiuungi team",
+	"members": "membri",
+	"selectedTeam": "team selezionato:",
+	"teamMembers": "membri del team",
+	"viewAsAList": "visualizza come elenco",
+	"viewAsAGraphic": "visualizza come grafica",
+	"useAllSides": "usa tutti i lati",
+	"selectPicture": "scegli l'immagine",
+	"saveAvatar": "salva l'avatar",
+	"del": "elimina",
+	"scrambleMembers": "scambia le posizioni",
+	"saved": "salvagto",
+	"addMember": "aggiungi membro"
+}

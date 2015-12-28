@@ -34,31 +34,8 @@
     <!--STYLES END-->
   </head>
 
-  <body  ng-view="">
+  <body>
     <%- body %>
-
-
-
-    <!--
-        Client-side Templates
-        ========================
-
-        HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-        that you load these templates client-side.
-
-        By default, your Gruntfile is configured to automatically load and precompile
-        client-side JST templates in your `assets/templates` folder, then
-        include them here automatically (between TEMPLATES and TEMPLATES END).
-        
-        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Import templates from other directories
-            + Use a different template engine (handlebars, jade, dust, etc.)
-            + Internationalize your client-side templates using a server-side
-              stringfile before they're served.
-    -->
 
     <!--TEMPLATES-->
     <script type="text/javascript" src="/jst.js"></script>
@@ -92,7 +69,6 @@
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
-    <script src="/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
     <script src="/js/dependencies/app.js"></script>
