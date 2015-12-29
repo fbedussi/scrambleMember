@@ -112,6 +112,7 @@
 
             <div ng-show="formDataMember.name">
                 <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
+                <button ng-model="avatar" ng-click="getRandomAvatar(member)"><%= __('randomAvatar') %></button>
                 
                 <div class="avatarEdit">
                     <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px" class="avatarOriginal">

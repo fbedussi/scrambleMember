@@ -12,9 +12,10 @@ module.exports = {
     });
   },
   updateMember: function(criteria, records, next) {   
-    Members.update(criteria, records).exec(function(err, member) {
-      if(err) throw err;
-      next(member);
-    });
+    //Members.update(criteria, records).exec(function(err, member) {
+    //  if(err) throw err;
+    //  next(member);
+    //});
+    return Members.update(criteria, records);
   }
 };

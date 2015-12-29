@@ -241,6 +241,10 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.data.file.name);
     });   
   };
+  
+  $scope.getRandomAvatar = function(member) {
+    member.avatarUrl = 'http://api.adorable.io/avatars/' + member.name;
+  };
 
   
 }]);
