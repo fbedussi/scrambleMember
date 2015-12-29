@@ -108,6 +108,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
                 $scope.members.push(response);
                 updateMembersPos();
                 $scope.formDataMember = {};
+                croppedDataUrl = null;
             });    
         }
         
@@ -218,6 +219,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
             console.log('member saved');
         });
         member.memberAvatarEdit = false;
+        croppedDataUrl = null;
     }
     
     if (!dataUrl) {

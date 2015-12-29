@@ -1,4 +1,3 @@
-resettare avatar al salvataggio
 selezione lingua front end
-sdoppiare controller
+sdoppiare controller ?
 gestire con le prmises il salvataggio dei membri
