@@ -1,3 +1,4 @@
 selezione lingua front end
 sdoppiare controller ?
 gestire con le prmises il salvataggio dei membri
+cancellare le immagini quando si cancellano i membri
