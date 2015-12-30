@@ -111,8 +111,12 @@
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
 
             <div ng-show="formDataMember.name">
+                <button ng-model="avatar" ng-click="getRandomAvatar(formDataMember.name)"><%= __('randomAvatar') %></button>
+                <div class="randomAvatar" ng-show="randomAvatarDisplay">
+                    <img ng-src="{{randomAvatarUrl}}">
+                </div>
                 <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
-                <button ng-model="avatar" ng-click="getRandomAvatar(member)"><%= __('randomAvatar') %></button>
+                
                 
                 <div class="avatarEdit">
                     <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px" class="avatarOriginal">

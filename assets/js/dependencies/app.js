@@ -1,23 +1,6 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop'])
-                            .filter('randomSrc', function () {
-                                return function (input) {
-                                    if (input)
-                                        return input + '?r=' + Math.round(Math.random() * 999999);
-                                };
-                            });
-
-//scrambleApp.config(['$routeProvider',
-//  function($routeProvider) {
-//    $routeProvider.when('/', {
-//      //templateUrl: '/templates/scramble.html',
-//      controller: 'ScrambleCtrl'
-//    }).otherwise({
-//      redirectTo: '/',
-//      caseInsensitiveMatch: true
-//    });
-//  }]);
+var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop']);
 
 scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService',
                                         function($scope, Upload, $rootScope, $timeout, ScrambleService) {
@@ -32,6 +15,8 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.membersView = 'gui';
   $scope.membersWidth = 100/($scope.members.length/2) + '%';
   $scope.useAllSides = false;
+  $scope.randomAvatarDisplay = false;
+  $scope.randomAvatarUrl = 'http://api.adorable.io/avatars/';
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {
@@ -109,6 +94,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
                 updateMembersPos();
                 $scope.formDataMember = {};
                 croppedDataUrl = null;
+                randomAvatarDisplay = false;
             });    
         }
         
@@ -120,6 +106,9 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         newMember.pos = $scope.members.length + 1;
         
         if (!dataUrl) {
+            if ($scope.randomAvatarDisplay) {
+                newMember.avatarUrl = $scope.randomAvatarUrl;
+            }
             saveMember(newMember);
             return;
         }
@@ -220,6 +209,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         });
         member.memberAvatarEdit = false;
         croppedDataUrl = null;
+        randomAvatarDisplay = false;
     }
     
     if (!dataUrl) {
@@ -242,8 +232,9 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     });   
   };
   
-  $scope.getRandomAvatar = function(member) {
-    member.avatarUrl = 'http://api.adorable.io/avatars/' + member.name;
+  $scope.getRandomAvatar = function(memberName) {
+    $scope.randomAvatarUrl += encodeURIComponent(memberName);
+    $scope.randomAvatarDisplay = true;
   };
 
   

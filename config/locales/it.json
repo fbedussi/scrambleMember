@@ -1,6 +1,6 @@
 {
 	"Title": "Scambiatore di posizione per i membri dei team",
-    "teams": "team",
+	"teams": "team",
 	"save": "salva",
 	"cancel": "annulla",
 	"addTeam": "aggiungi team",
@@ -15,5 +15,6 @@
 	"del": "elimina",
 	"scrambleMembers": "scambia le posizioni",
 	"saved": "salvato",
-	"addMember": "aggiungi membro"
+	"addMember": "aggiungi membro",
+	"randomAvatar": "randomAvatar"
 }
