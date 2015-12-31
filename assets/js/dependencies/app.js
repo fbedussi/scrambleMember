@@ -17,6 +17,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.useAllSides = false;
   $scope.randomAvatarDisplay = false;
   $scope.randomAvatarUrl = 'http://api.adorable.io/avatars/';
+  $scope.croppedDataUrl = null;
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {

@@ -113,7 +113,7 @@
             <div ng-show="formDataMember.name">
                 <button ng-model="avatar" ng-click="getRandomAvatar(formDataMember.name)"><%= __('randomAvatar') %></button>
                 <div class="randomAvatar" ng-show="randomAvatarDisplay">
-                    <img ng-src="{{randomAvatarUrl}}">
+                    <img ng-if="randomAvatarDisplay" ng-src="{{randomAvatarUrl}}">
                 </div>
                 <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
                 
