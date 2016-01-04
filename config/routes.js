@@ -49,6 +49,7 @@ module.exports.routes = {
 
   'DELETE /api/v1/members/:id?': 'MembersController.deleteMember',
   'POST /api/v1/members/avatar': 'MembersController.uploadAvatar',
+  'DELETE /api/v1/members/:id/avatar': 'MembersController.deleteAvatar',
   'DELETE /api/v1/team/:id/members': 'MembersController.deleteTeamMembers',
   'GET /api/v1/team/:id/members': 'MembersController.getTeamMembers',
   'PUT /api/v1/members': 'MembersController.updateMembers',

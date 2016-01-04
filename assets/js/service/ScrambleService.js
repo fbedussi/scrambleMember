@@ -83,6 +83,15 @@ scrambleApp.service('ScrambleService', function($http, $q) {
                 defer.reject(err);
             });
             return defer.promise;
+        },
+        'deleteAvatar': function(member) {
+                var defer = $q.defer();
+                $http.delete('/api/v1/members/' + member.id + '/avatar').success(function(resp){
+                defer.resolve(resp);
+            }).error( function(err) {
+                defer.reject(err);
+            });
+            return defer.promise;
         }
     };
 });

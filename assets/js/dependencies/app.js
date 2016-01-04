@@ -129,10 +129,21 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     };
   
    $scope.removeMember = function(member) {
-    ScrambleService.removeMember(member).then(function(response) {
-      $scope.members.splice($scope.members.indexOf(member), 1);
-      updateMembersPos();
-    });
+    ScrambleService.deleteAvatar(member).then(function(response) {
+        console.log('avatar deleted' + response);
+        
+        ScrambleService.removeMember(member).then(function(response) {
+            $scope.members.splice($scope.members.indexOf(member), 1);
+            
+            updateMembersPos();
+          });
+        
+      }).catch(function(reason) {
+        console.log('avatar delete error: ' + reason);
+      });
+    
+    
+    
   };
   
   function getStyle(pos, totalPos) {

@@ -13,20 +13,6 @@ module.exports = {
         var criteria =  (req.param('id')) ? {id: req.param('id')} : {};
     
         MembersService.removeMember(criteria, function(success) {
-            
-        //    fs.unlink('../../assets' + req.file, function(err) {
-        //    
-        //    if (err) {
-        //        console.log('error');
-        //        res.status(404);
-        //        res.send('not deleted');
-        //    } else {
-        //        res.status(204);
-        //        res.send('deleted');
-        //    }
-        //
-        //    
-        //});
             res.json(success);
         });
     },
@@ -102,6 +88,18 @@ module.exports = {
                   pubDirName: saveDir,
                   fileName: path.basename(uploadedFiles[0].fd)
                 });    
+            });
+        });
+    },
+    deleteAvatar: function(req, res) {
+        MembersService.getMember({id: req.param('id')}, function(success) {
+            fs.unlink(path.join('assets', success[0].avatarUrl), function(err) {
+                if (err) {
+                    res.status(404);
+                } else {
+                    res.status(200);
+                }
+                res.send();
             });
         });
     }
