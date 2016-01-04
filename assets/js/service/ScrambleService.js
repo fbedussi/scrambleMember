@@ -56,7 +56,10 @@ scrambleApp.service('ScrambleService', function($http, $q) {
         },
         'removeMember': function(member) {
           var defer = $q.defer();
-          $http.delete('/api/v1/members/' + member.id).success(function(resp){
+          $http({
+            method: 'DELETE',
+            url: '/api/v1/members/' + member.id
+          }).success(function(resp){
             defer.resolve(resp);
           }).error( function(err) {
             defer.reject(err);

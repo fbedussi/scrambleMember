@@ -1,4 +1,4 @@
 selezione lingua front end
 sdoppiare controller ?
-gestire con le prmises il salvataggio dei membri
+gestire con le promises il salvataggio dei membri
 cancellare le immagini quando si cancellano i membri

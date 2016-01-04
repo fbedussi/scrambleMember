@@ -11,8 +11,22 @@ var fs = require('fs');
 module.exports = {
 	deleteMember: function(req, res) {
         var criteria =  (req.param('id')) ? {id: req.param('id')} : {};
-        
+    
         MembersService.removeMember(criteria, function(success) {
+            
+        //    fs.unlink('../../assets' + req.file, function(err) {
+        //    
+        //    if (err) {
+        //        console.log('error');
+        //        res.status(404);
+        //        res.send('not deleted');
+        //    } else {
+        //        res.status(204);
+        //        res.send('deleted');
+        //    }
+        //
+        //    
+        //});
             res.json(success);
         });
     },
@@ -89,9 +103,7 @@ module.exports = {
                   fileName: path.basename(uploadedFiles[0].fd)
                 });    
             });
-        
-            
         });
-  }
+    }
 };
 
