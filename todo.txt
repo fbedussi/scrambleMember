@@ -1,3 +1,4 @@
 selezione lingua front end
 sdoppiare controller ?
 gestire con le promises il salvataggio dei membri
+gestire la posizione dei membri in grafica con il top, altrimenti salta l'animazione quando si muovono in verticale
