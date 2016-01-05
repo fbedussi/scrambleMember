@@ -129,8 +129,8 @@
                     </div>
                 </div>
                 
-                <button ng-click="addMember(croppedDataUrl)" class="addBtn"><%= __('addMember') %></button>
-                <button ng-click="formDataMember.name = ''" class="addBtn"><%= __('cancel') %></button>
+                <button ng-click="addMember()" class="addBtn"><%= __('addMember') %></button>
+                <button ng-click="resetNewMember()" class="addBtn"><%= __('cancel') %></button>
                     
                 <span class="progress" ng-show="progress >= 0">
                   <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>

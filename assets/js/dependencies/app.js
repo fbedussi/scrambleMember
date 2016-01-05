@@ -4,6 +4,8 @@ var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop']);
 
 scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService',
                                         function($scope, Upload, $rootScope, $timeout, ScrambleService) {
+  var randomAvatarBaseUrl = 'http://api.adorable.io/avatars/';
+  
   $scope.formDataNewTeam = {};
   $scope.formDataEditTeam = {};
   $scope.formDataMember = {};
@@ -16,8 +18,9 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.membersWidth = 100/($scope.members.length/2) + '%';
   $scope.useAllSides = false;
   $scope.randomAvatarDisplay = false;
-  $scope.randomAvatarUrl = 'http://api.adorable.io/avatars/';
+  $scope.randomAvatarUrl = randomAvatarBaseUrl;
   $scope.croppedDataUrl = null;
+  $scope.avatar = null;
   
   function selectIfIsTheOnlyTeam() {
     if ($scope.teams.length === 1) {
@@ -106,7 +109,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         newMember.avatarUrl = '';
         newMember.pos = $scope.members.length + 1;
         
-        if (!dataUrl) {
+        if (!$scope.avatar) {
             if ($scope.randomAvatarDisplay) {
                 newMember.avatarUrl = $scope.randomAvatarUrl;
             }
@@ -253,6 +256,13 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
   $scope.getRandomAvatar = function(memberName) {
     $scope.randomAvatarUrl += encodeURIComponent(memberName);
     $scope.randomAvatarDisplay = true;
+  };
+  
+  $scope.resetNewMember = function() {
+    $scope.formDataMember.name = '';
+    $scope.randomAvatarUrl = randomAvatarBaseUrl;
+    $scope.randomAvatarDisplay = false;
+    $scope.croppedDataUrl = null;
   };
 
   

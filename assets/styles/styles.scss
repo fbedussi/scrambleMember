@@ -4,6 +4,7 @@ $backgroundColor: #EAEAEA;
 $borderTickness: 3px;
 $fontSize: 13px;
 $transitionDuration: 0.5s;
+$avatarDiameter: 112px;
 
 * {
     margin: 0;
@@ -112,6 +113,7 @@ main {
 
 .avatar {
     border-radius: 50%;
+    width: $avatarDiameter;
     overflow: hidden;
     border: solid $borderTickness*2 $accentColor;
 }
