@@ -1,4 +1,3 @@
 selezione lingua front end
 sdoppiare controller ?
 gestire con le promises il salvataggio dei membri
-riorganizzare form inserimento nuovo membro

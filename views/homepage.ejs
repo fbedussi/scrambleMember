@@ -44,7 +44,7 @@
             <table ng-show="membersView === 'list'" class="membersList"> 
                 <tr ng-repeat="singleMember in members | orderBy:'pos'">
                     <!--<td>{{singleMember.pos}}</td>-->
-                    <td>
+                    <td class="loading">
                         <img class="avatar" ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}" ng-click="singleMember.memberAvatarEdit = true"/>
                     </td>
                     
@@ -96,7 +96,7 @@
                         width: {{singleMember.style.width}};
                         height: {{singleMember.style.height}};
                     ">
-                    <img class="avatar" ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/>
+                    <div class="loading"><img class="avatar" ng-if="singleMember.avatarUrl" ng-src="{{singleMember.avatarUrl}}"/></div>
                     <div class="memberName" ng-hide="memberEdit" ng-click="memberEdit = true"><span>{{singleMember.name}}</span></div>
                     <div ng-hide="memberEdit" ng-click="memberEdit = true" class="memberPos"><span>{{singleMember.pos}}</span></div>
                 </div>
@@ -111,14 +111,18 @@
             <input type="text" placeholder="Enter new team member name" ng-model="formDataMember.name">
 
             <div ng-show="formDataMember.name">
-                <button ng-model="avatar" ng-click="getRandomAvatar(formDataMember.name)"><%= __('randomAvatar') %></button>
-                <div class="randomAvatar" ng-show="randomAvatarDisplay">
+                <div class="newMemberMenu">
+                    <button ng-model="avatar" ng-click="getRandomAvatar(formDataMember.name)"><%= __('randomAvatar') %></button>
+                    <button ngf-select ng-model="avatar" accept="image/*" ng-click="randomAvatarDisplay = false"><%= __('selectPicture') %></button>
+                    <button ng-click="addMember()" class="addBtn"><%= __('addMember') %></button>
+                    <button ng-click="resetNewMember()" class="addBtn"><%= __('cancel') %></button>
+                </div>
+                
+                <div class="randomAvatar loading" ng-show="randomAvatarDisplay">
                     <img ng-if="randomAvatarDisplay" ng-src="{{randomAvatarUrl}}">
                 </div>
-                <button ngf-select ng-model="avatar" accept="image/*"><%= __('selectPicture') %></button>
                 
-                
-                <div class="avatarEdit">
+                <div class="avatarEdit" ng-show="avatar">
                     <div ngf-drop ng-model="avatar" ngf-pattern="image/*" class="cropArea" style="width: 300px; height: 300px" class="avatarOriginal">
                         <img-crop image="avatar  | ngfDataUrl"                 
                         result-image="croppedDataUrl" ng-init="croppedDataUrl=''" result-image-size="100">
@@ -129,9 +133,6 @@
                     </div>
                 </div>
                 
-                <button ng-click="addMember()" class="addBtn"><%= __('addMember') %></button>
-                <button ng-click="resetNewMember()" class="addBtn"><%= __('cancel') %></button>
-                    
                 <span class="progress" ng-show="progress >= 0">
                   <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
                 </span>

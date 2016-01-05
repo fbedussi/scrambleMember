@@ -114,10 +114,41 @@ main {
 .avatar {
     border-radius: 50%;
     width: $avatarDiameter;
+    height: $avatarDiameter;
+    /*background: lighten($accentColor, 40%);*/
     overflow: hidden;
     border: solid $borderTickness*2 $accentColor;
 }
 
+@keyframes rotation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+    position: relative;
+    
+    &:before {
+        content: "";
+        position: absolute;
+        top: calc(50% - 15px - 6px);
+        left: calc(50% - 15px - 6px);
+        width: 30px;
+        height: 30px;
+        border: solid $borderTickness*2 lighten($accentColor, 30%);
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: rotation 3s linear infinite;
+    }
+    
+    > * {
+        position: relative;
+    }
+}
 .membersList {
     td {
         padding: 0 1em;
@@ -223,15 +254,29 @@ main {
     }
 }
 
+.newMemberMenu {
+    margin-bottom: 1em;
+}
+
+.randomAvatar {
+    width: 300px;
+    height: 300px;
+    
+    img {
+        width: 100%;
+        display: block;
+    }
+}
+
 .avatarEdit {
     margin: 2em 0;
-    max-height: 0;
+    /*max-height: 0;
     overflow: hidden;
-    transition: max-height $transitionDuration;
+    transition: max-height $transitionDuration;*/
     
-    .ng-dirty + & {
+    /*.ng-dirty + & {
         max-height: 1000px;
-    }
+    }*/
     
     .cropArea, .avatarResized {
         display: inline-block;
