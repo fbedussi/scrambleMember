@@ -132,21 +132,32 @@ main {
 .loading {
     position: relative;
     
-    &:before {
+    &:before, &:after {
         content: "";
         position: absolute;
         top: calc(50% - 15px - 6px);
         left: calc(50% - 15px - 6px);
         width: 30px;
         height: 30px;
-        border: solid $borderTickness*2 lighten($accentColor, 30%);
+        border: solid $borderTickness*2 transparent;
         border-radius: 50%;
-        border-top-color: transparent;
-        animation: rotation 3s linear infinite;
+        border-top-color: lighten($accentColor, 30%);
+        border-right-color: lighten($accentColor, 30%);
+        
+    }
+    
+    &:before {
+        animation: rotation 1.5s ease-in-out infinite;
+    }
+    
+    &:after {
+        animation: rotation 1.5s linear infinite;
+        z-index: 1;
     }
     
     > * {
         position: relative;
+        z-index: 2;
     }
 }
 .membersList {

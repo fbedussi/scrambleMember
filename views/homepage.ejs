@@ -28,7 +28,7 @@
         </form>
     </div>
     <div ng-show="selectedTeam.name">    
-        <fieldset class="members">
+        <fieldset class="members" ng-hide="formDataMember.name">
             <legend><%= __('teamMembers') %> {{selectedTeam.name}}</legend>
 
             <fieldset>
