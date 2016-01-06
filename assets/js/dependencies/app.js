@@ -32,6 +32,8 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     //$location.path('/en');
     
     function updateMembersPos() {
+        getSeats($scope.members);
+        
         $scope.members.forEach(function(member, i) {
             member.style = getStyle(member.pos, $scope.members.length, {});
         });
@@ -145,30 +147,78 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         });
     };
   
-    //function getSeats(members, customOptions) {
-    //    var options = {
-    //        seats: {
-    //            left: 1,
-    //            top: 5,
-    //            right: 1,
-    //            bottom: 5
-    //        }
-    //    };
-    //    
-    //    $.extend(options, customOptions);
-    //    
-    //    var availableSeats = options.seats;
-    //    var availableMembers = members;
-    //    
-    //    function getSmallestSide(seats) {
-    //        var sortedSeats = Object.keys(seats).sort(function(a,b){return seats[a]-seats[b];});
-    //        return sortedSeats[0];
-    //    }
-    //    
-    //    function seatMember(availableSeats, availableMembers) {
-    //        //code
-    //    }
-    //}
+    function getSeats(members, customOptions) {
+        var options = {
+            availableSeats: {
+                left: 1,
+                top: 5,
+                right: 1,
+                bottom: 5
+            }
+        };
+        
+        $.extend(options, customOptions);
+        
+        //var table = {
+        //    left: {
+        //        availableSeats: options.availableSeats.left,
+        //        membersSeated: []
+        //        },
+        //    top: {
+        //        availableSeats: options.availableSeats.top,
+        //        membersSeated: []},
+        //    right: {
+        //        availableSeats: options.availableSeats.right,
+        //        membersSeated: []},
+        //    bottom: {
+        //        availableSeats: options.availableSeats.bottom,
+        //        membersSeated: []
+        //    }
+        //};
+        var table = {};
+        var membersIndex = 0;
+        var sideIndex = null;
+        
+        Object.keys(options.availableSeats).forEach(function(side){
+            table[side] = {
+                    availableSeats: options.availableSeats[side],
+                    idMembersSeated: []  
+                };    
+        });
+        
+        function getSmallestSide(table) {
+            var sortedSides = Object.keys(table).sort(function(sideA,sideB){
+                    return (table[sideA].availableSeats === 0) ? true : table[sideA].availableSeats-table[sideB].availableSeats;
+                });
+            return sortedSides[0];
+        }
+        
+        function GetNextSide(table) {
+            if (sideIndex === null) {
+                sideIndex = getSmallestSide(table);
+            } else {
+                
+            }
+        };
+        
+        function seatMember() {
+            if (membersIndex === members.length) {
+                return;
+            }
+            var side = getNextSide(table);
+            
+            if (table[side].idMembersSeated.length < table[side].availableSeats) {
+                table[side].idMembersSeated.push(members[membersIndex++].id);
+                table[side].availableSeats--;
+            }
+            
+            seatMember();
+        }
+        
+        seatMember();
+        
+        console.log(table);
+    }
     
     function getStyle(pos, totalPos) {
         var options = {
