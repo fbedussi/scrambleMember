@@ -114,7 +114,7 @@
                 <div class="newMemberMenu">
                     <button ng-model="avatar" ng-click="getRandomAvatar(formDataMember.name)"><%= __('randomAvatar') %></button>
                     <button ngf-select ng-model="avatar" accept="image/*" ng-click="randomAvatarDisplay = false"><%= __('selectPicture') %></button>
-                    <button ng-click="addMember(croppedDataUrl)" class="addBtn"><%= __('addMember') %></button>
+                    <button ng-click="addMember()" class="addBtn"><%= __('addMember') %></button>
                     <button ng-click="resetNewMember()" class="addBtn"><%= __('cancel') %></button>
                 </div>
                 

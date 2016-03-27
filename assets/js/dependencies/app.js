@@ -193,7 +193,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
             return sortedSides[0];
         }
         
-        function getNextSide(table) {
+        function GetNextSide(table) {
             if (sideIndex === null) {
                 sideIndex = getSmallestSide(table);
             } else {
