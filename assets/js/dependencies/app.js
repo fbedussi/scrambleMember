@@ -156,31 +156,6 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
             deleteMember(member);
         });
     };
-  
-    //function getSeats(members, customOptions) {
-    //    var options = {
-    //        seats: {
-    //            left: 1,
-    //            top: 5,
-    //            right: 1,
-    //            bottom: 5
-    //        }
-    //    };
-    //    
-    //    $.extend(options, customOptions);
-    //    
-    //    var availableSeats = options.seats;
-    //    var availableMembers = members;
-    //    
-    //    function getSmallestSide(seats) {
-    //        var sortedSeats = Object.keys(seats).sort(function(a,b){return seats[a]-seats[b];});
-    //        return sortedSeats[0];
-    //    }
-    //    
-    //    function seatMember(availableSeats, availableMembers) {
-    //        //code
-    //    }
-    //}
     
     function getStyle(pos, totalPos) {
         var options = {
@@ -196,8 +171,7 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
         
         style.height = options.height + '%';
         
-        style.top = (pos <= halfPos)? '0' : 'auto';
-        style.bottom = (pos <= halfPos)? 'auto' : '0';
+        style.top = (pos <= halfPos)? '0' : '100' - options.height + '%';
         style.left = left + '%';
         
         if (options.useAllSides) {
@@ -205,16 +179,14 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
             
             if (pos === 1) {
                 style.top = '50' - options.height/2 + '%';
-                style.bottom = 'auto';
                 style.left = '0';
                 return style;
             }
             
             if (pos === halfPos + 1) {
                 style.top = '50' - options.height/2 + '%';
-                style.bottom = 'auto';
-                style.left = 'auto';
-                style.right = '0';
+                style.left = '100%';
+                style.transform = 'translate(-100%,0)';
                 return style;
             }
             
