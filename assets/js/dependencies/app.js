@@ -131,17 +131,29 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
     };
   
     $scope.removeMember = function(member) {
-        ScrambleService.deleteAvatar(member).then(function(response) {
-            console.log('avatar deleted' + response);
-            
-            ScrambleService.removeMember(member).then(function(response) {
+        function deleteMember(member) {
+          ScrambleService.removeMember(member).then(function(response) {
                 $scope.members.splice($scope.members.indexOf(member), 1);
-                
                 updateMembersPos();
             });
-            
+        }
+        
+        if (member.avatarUrl === '') {
+          deleteMember(member);
+          return;
+        }
+        
+        if (mamber.avatarUrl.indexOf('http') === 0) {
+          deleteMember(member);
+          return;
+        }
+        
+        ScrambleService.deleteAvatar(member).then(function(response) {
+            console.log('avatar deleted' + response);
+            deleteMember(member);
         }).catch(function(reason) {
             console.log('avatar delete error: ' + reason);
+            deleteMember(member);
         });
     };
   
