@@ -8,7 +8,7 @@
   "main": "./angular-moment.js",
   "ignore": [],
   "dependencies": {
-    "angular": ">=1.0.0 <1.4.0",
+    "angular": "~1.2.19",
     "moment": ">=2.0.0 <2.7.0"
   },
   "devDependencies": {
