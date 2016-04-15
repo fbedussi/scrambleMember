@@ -8,7 +8,7 @@
     "./ui-bootstrap-tpls.js"
   ],
   "dependencies": {
-    "angular": "~1.2.19"
+    "angular": "~1.5.4"
   },
   "homepage": "https://github.com/angular-ui/bootstrap-bower",
   "_release": "0.11.2",
