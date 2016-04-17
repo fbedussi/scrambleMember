@@ -1,0 +1,237 @@
+/**
+ * importer.scss
+ *
+ * By default, new Sails projects are configured to compile this file
+ * from SASS to CSS.  Unlike CSS files, SASS files are not compiled and
+ * included automatically unless they are imported below.
+ *
+ * The SASS files imported below are compiled and included in the order
+ * they are listed.  Mixins, variables, etc. should be imported first
+ * so that they can be accessed by subsequent SASS stylesheets.
+ *
+ * (Just like the rest of the asset pipeline bundled in Sails, you can
+ * always omit, customize, or replace this behavior with SASS, SCSS,
+ * or any other Grunt tasks you like.)
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  font-family: sans-serif;
+  font-size: 13px;
+  background: #EAEAEA; }
+
+fieldset {
+  border: solid 3px #1E8AC9;
+  padding: 1em; }
+  fieldset legend {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 1em;
+    color: #1E8AC9;
+    font-size: 13px; }
+
+button, input[type="text"] {
+  height: 4em;
+  vertical-align: middle;
+  font-size: 13px; }
+
+button {
+  text-transform: uppercase;
+  padding: 1em;
+  background: #152833;
+  border: solid 3px #1E8AC9;
+  border-radius: 3px;
+  color: #EAEAEA; }
+  button:hover {
+    border-color: #91ccef; }
+  button:active {
+    border-color: #060c0f; }
+
+input[type="text"] {
+  padding: 1em;
+  border: solid 1px #1E8AC9;
+  border-radius: 3px;
+  width: 20em;
+  background: #EAEAEA; }
+
+input[type="checkbox"], input[type="radio"], label {
+  vertical-align: middle; }
+
+h1 {
+  background-color: #152833;
+  color: #EAEAEA;
+  border-bottom: solid 3px #1E8AC9;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 1em; }
+
+main {
+  padding: 2em; }
+
+.teams {
+  margin-bottom: 1em; }
+
+.addForm {
+  margin-top: 1em; }
+
+.team {
+  margin-bottom: 1em; }
+
+.teamName {
+  padding: 0 1em; }
+
+.members {
+  margin-bottom: 1em; }
+  .members fieldset {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin: 0 -1em 1em;
+    padding-top: 0; }
+    .members fieldset label {
+      margin-right: 2em; }
+
+.avatar {
+  border-radius: 50%;
+  width: 112px;
+  height: 112px;
+  /*background: lighten($accentColor, 40%);*/
+  overflow: hidden;
+  border: solid 6px #1E8AC9; }
+
+@keyframes rotation {
+  from {
+    transform: rotate(0); }
+  to {
+    transform: rotate(360deg); } }
+.loading {
+  position: relative; }
+  .loading:before, .loading:after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 15px - 6px);
+    left: calc(50% - 15px - 6px);
+    width: 30px;
+    height: 30px;
+    border: solid 6px transparent;
+    border-radius: 50%;
+    border-top-color: #91ccef;
+    border-right-color: #91ccef; }
+  .loading:before {
+    animation: rotation 1.5s ease-in-out infinite; }
+  .loading:after {
+    animation: rotation 1.5s linear infinite;
+    z-index: 1; }
+  .loading > * {
+    position: relative;
+    z-index: 2; }
+
+.membersList td {
+  padding: 0 1em; }
+
+.membersGui {
+  height: 550px;
+  position: relative; }
+  .membersGui .member {
+    position: absolute;
+    text-align: center;
+    transition: all 0.5s; }
+    .membersGui .member .avatar {
+      display: block;
+      margin: 0 auto 0.3em; }
+  .membersGui .memberName {
+    display: inline-block;
+    text-transform: uppercase;
+    position: relative;
+    height: 2em; }
+    .membersGui .memberName span {
+      position: relative;
+      display: block;
+      z-index: 2;
+      background: #1E8AC9;
+      color: #EAEAEA;
+      padding: 0.5em 2em; }
+    .membersGui .memberName:after, .membersGui .memberName:before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 0;
+      width: 1em;
+      bottom: -0.7em;
+      border: solid 1em #1b7bb3;
+      z-index: 1; }
+    .membersGui .memberName:after {
+      left: -2em;
+      border-left-color: transparent; }
+    .membersGui .memberName:before {
+      right: -2em;
+      border-right-color: transparent; }
+  .membersGui .memberPos {
+    margin-top: 0.3em; }
+    .membersGui .memberPos span {
+      border-radius: 50%;
+      background: #152833;
+      color: #EAEAEA;
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      padding: 0.15em; }
+
+.table {
+  background: #152833;
+  position: absolute;
+  border: solid 3px #1E8AC9;
+  width: 100%;
+  height: 33%;
+  top: 33%;
+  left: 0;
+  margin: 0 auto;
+  border-radius: 5px;
+  transition: all 0.5s; }
+  .useAllSides .table {
+    width: 70%;
+    left: 15%; }
+
+.addMemberForm input[type="text"] {
+  float: left;
+  margin-right: 2em; }
+.addMemberForm:after {
+  content: "";
+  display: block;
+  width: 100%;
+  clear: both; }
+
+.newMemberMenu {
+  margin-bottom: 1em; }
+
+.randomAvatar {
+  width: 300px;
+  height: 300px; }
+  .randomAvatar img {
+    width: 100%;
+    display: block; }
+
+.avatarEdit {
+  margin: 2em 0;
+  /*max-height: 0;
+  overflow: hidden;
+  transition: max-height $transitionDuration;*/
+  /*.ng-dirty + & {
+      max-height: 1000px;
+  }*/ }
+  .avatarEdit .cropArea, .avatarEdit .avatarResized {
+    display: inline-block;
+    vertical-align: middle; }
+  .avatarEdit .cropArea {
+    margin-right: 2em; }
+
+.scrambleBtn {
+  float: right;
+  display: inline-block; }
+  .scrambleBtn .alert {
+    margin-right: 2em; }
+
+/*# sourceMappingURL=importer.css.map */
