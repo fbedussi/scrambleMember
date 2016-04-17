@@ -1,0 +1,106 @@
+{
+  "data": {
+    "members": [
+      {
+        "name": "Fra",
+        "team": 1,
+        "avatarUrl": "http://api.adorable.io/avatars/Fra",
+        "pos": 4,
+        "createdAt": "2016-03-26T22:47:01.625Z",
+        "updatedAt": "2016-04-16T21:12:39.833Z",
+        "id": 1
+      },
+      {
+        "name": "AAA",
+        "team": 1,
+        "avatarUrl": "http://api.adorable.io/avatars/AAA",
+        "pos": 3,
+        "createdAt": "2016-03-26T22:48:39.125Z",
+        "updatedAt": "2016-04-16T21:12:39.835Z",
+        "id": 2
+      },
+      {
+        "name": "dfzxcv",
+        "team": 1,
+        "avatarUrl": "http://api.adorable.io/avatars/dfzxcv",
+        "pos": 1,
+        "createdAt": "2016-03-28T17:26:36.211Z",
+        "updatedAt": "2016-04-16T21:12:39.836Z",
+        "id": 8
+      },
+      {
+        "name": "Davide",
+        "team": 1,
+        "avatarUrl": "/images/a3268f91-7eff-473d-9b79-d1af277f87e7",
+        "pos": 2,
+        "createdAt": "2016-04-16T14:27:44.768Z",
+        "updatedAt": "2016-04-16T21:12:39.839Z",
+        "id": 9
+      }
+    ],
+    "team": [
+      {
+        "name": "Winter",
+        "createdAt": "2016-03-26T22:40:08.156Z",
+        "updatedAt": "2016-03-26T22:40:08.156Z",
+        "id": 1
+      }
+    ]
+  },
+  "schema": {
+    "members": {
+      "name": {
+        "type": "text"
+      },
+      "team": {
+        "type": "integer",
+        "model": "team",
+        "foreignKey": true,
+        "alias": "team"
+      },
+      "avatarUrl": {
+        "type": "text"
+      },
+      "pos": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "team": {
+      "name": {
+        "type": "text"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "members": {
+      "id": 9
+    },
+    "team": {
+      "id": 1
+    }
+  }
+}
