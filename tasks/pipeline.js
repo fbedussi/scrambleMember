@@ -39,6 +39,7 @@ var jsFilesToInject = [
    '/bower_components/ng-img-crop/compile/minified/ng-img-crop.js',
   //'/bower_components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
   
+  'js/service/**/*.js',
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
