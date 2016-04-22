@@ -29,13 +29,13 @@ var jsFilesToInject = [
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
-  '/bower_components/jquery/dist/jquery.min.js',
-  '/bower_components/angular/angular.min.js',
+  '/bower_components/jquery/dist/jquery.js',
+  '/bower_components/angular/angular.js',
   //'/bower_components/angular-route/angular-route.min.js',
   //'/bower_components/angular-animate/angular-animate.js',
   //'/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   //'/bower_components/bootstrap/dist/js/boostrap.js',
-  '/bower_components/ng-file-upload/ng-file-upload.min.js',
+  '/bower_components/ng-file-upload/ng-file-upload.js',
    '/bower_components/ng-img-crop/compile/minified/ng-img-crop.js',
   //'/bower_components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
   
