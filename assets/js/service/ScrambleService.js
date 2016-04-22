@@ -1,4 +1,4 @@
-angular.module('ScrambleService', []).service('ScrambleService', function($http, $q) {
+angular.module('scrambleService', []).service('ScrambleService', function($http, $q) {
   return {
         'getTeams': function() {
           var defer = $q.defer();
