@@ -1,4 +1,6 @@
-angular.module('scrambleApp').service('ScrambleService', function($http, $q) {
+var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop']);
+
+scrambleApp.service('ScrambleService', function($http, $q) {
   return {
         'getTeams': function() {
           var defer = $q.defer();
