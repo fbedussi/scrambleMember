@@ -1,6 +1,6 @@
 'use strict';
 
-var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop', 'scrambleService']);
+var scrambleApp = angular.module('scrambleApp', ['ngFileUpload', 'ngImgCrop']);
 
 scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$timeout', 'ScrambleService',
     function($scope, Upload, $rootScope, $timeout, ScrambleService) {
