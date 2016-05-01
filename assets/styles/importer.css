@@ -192,8 +192,8 @@ main {
   border-radius: 5px;
   transition: all 0.5s; }
   .useAllSides .table {
-    width: 70%;
-    left: 15%; }
+    width: 60%;
+    left: 20%; }
 
 .addMemberForm input[type="text"] {
   float: left;

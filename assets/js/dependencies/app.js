@@ -179,13 +179,13 @@ scrambleApp.controller('ScrambleCtrl', ['$scope', 'Upload', '$rootScope', '$time
             
             if (pos === 1) {
                 style.top = '50' - options.height/2 + '%';
-                style.left = '0';
+                style.left = '2em';
                 return style;
             }
             
             if (pos === halfPos + 1) {
                 style.top = '50' - options.height/2 + '%';
-                style.left = '100%';
+                style.left = 'calc(100% - 2em)';
                 style.transform = 'translate(-100%,0)';
                 return style;
             }
